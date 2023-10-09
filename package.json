@@ -1,0 +1,37 @@
+{
+  "name": "@renzp/number-correct",
+  "version": "0.0.0",
+  "author": "renzp <1074720760.qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renzp94/number-correct.git"
+  },
+  "module": "index.ts",
+  "devDependencies": {
+    "@biomejs/biome": "^1.2.2",
+    "standard-version": "^9.5.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "bugs": {
+    "url": "https://github.com/renzp94/number-correct/issues"
+  },
+  "files": ["dist"],
+  "homepage": "https://github.com/renzp94/number-correct#readme",
+  "keywords": [
+    "number precision",
+    "floating problem",
+    "rounding error",
+    "number correct"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "pub": "npm run build && standard-version && npm publish"
+  },
+  "type": "module"
+}
