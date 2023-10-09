@@ -1,15 +1,31 @@
 # number-correct
 
-To install dependencies:
+基于竖式计算方式矫正js数字计算精度
 
-```bash
-bun install
+## 什么是竖式计算
+
+竖式计算就是数学中的`列竖式`。如：`123 + 456 = 579`
+
+```js
+  1 2 3
++ 4 5 6
+--------
+  5 7 9
 ```
 
-To run:
+此计算方法不管多大的数据都不会出现精度丢失问题，但是唯一的不足就是，返回数据是字符串。
 
-```bash
-bun run index.ts
+
+## 安装
+
+```sh
+npm install @renzp/number-correct
 ```
 
-This project was created using `bun init` in bun v1.0.2. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## 使用
+
+```ts
+import { plus } from '@renzp/number-correct'
+
+console.log(plus(1,2,3,'44444444444444.0000000000004444444444'));
+```
