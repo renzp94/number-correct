@@ -1,6 +1,6 @@
 {
   "name": "@renzp/number-correct",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "renzp <1074720760.qq.com>",
   "repository": {
     "type": "git",
@@ -16,7 +16,9 @@
   "bugs": {
     "url": "https://github.com/renzp94/number-correct/issues"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/renzp94/number-correct#readme",
   "keywords": [
     "number precision",
