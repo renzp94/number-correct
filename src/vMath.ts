@@ -119,7 +119,7 @@ export interface VData {
  */
 export const getVData = (numbers: Array<string | number>): [VData, VData] => {
   // 拆分整数和小数
-  let list: VNumber[] = numbers.map((v) => {
+  const list: VNumber[] = numbers.map((v) => {
     const [integer, decimal] = v.toString().split('.')
 
     return {
@@ -133,29 +133,30 @@ export const getVData = (numbers: Array<string | number>): [VData, VData] => {
   // 小数最大位数
   const decimalMaxLen = list.reduce(createGetMaxLenReduce('decimal'), 0)
 
-  list = list.map((item) => {
+  const integerList: number[][] = []
+  const decimalList: number[][] = []
+
+  list.forEach((item) => {
     // 整数一定有，根据最大位数用0补齐所有位数
     const integerZeroList = createNumberArray(
       integerMaxLen - item.integer.length,
     )
     // 整数要先反转再补位
-    item.integer = item.integer.reverse().concat(integerZeroList)
+    const integer = item.integer.reverse().concat(integerZeroList)
+    integerList.push(integer)
     // 小数如果有也根据最大位数用0补齐所有位数
     if (decimalMaxLen > 0) {
       const decimalZeroList = createNumberArray(
         decimalMaxLen - item.decimal.length,
       )
-      item.decimal = item.decimal.concat(decimalZeroList).reverse()
+      const decimal = item.decimal.concat(decimalZeroList).reverse()
+      decimalList.push(decimal)
     }
-    return item
   })
 
-  const decimalList = list.map((item) => item.decimal)
-  const defaultDecimalList = createNumberArray(decimalMaxLen)
-
-  const integerList = list.map((item) => item.integer)
   // 少一位补0，用于空出进位位置
   const defaultIntegerList = createNumberArray(integerMaxLen - 1)
+  const defaultDecimalList = createNumberArray(decimalMaxLen)
 
   return [
     {
