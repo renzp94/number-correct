@@ -1,3 +1,5 @@
+import type { Operation } from './math'
+
 /**
  * 将数字字符串转换成数字数组
  * @param v 数字字符串
@@ -56,13 +58,6 @@ export const reduceVData = (
   )
 }
 
-type Operation = (
-  curr: number,
-  next: number,
-  result: number[],
-  index: number,
-) => number[]
-
 export interface VNumber {
   integer: number[]
   decimal: number[]
@@ -86,7 +81,7 @@ export const createVCalc = (operation: Operation) => {
     do {
       const curr = currList[index] ?? 0
       const next = nextList[index] ?? 0
-      result = operation(curr, next, result, index)
+      result = operation(curr, next, result, index, currList, nextList)
       index++
     } while (index < count)
 
@@ -158,4 +153,19 @@ export const getVData = (numbers: Array<string | number>): [VData, VData] => {
       maxLen: decimalMaxLen,
     },
   ]
+}
+
+export const getThanZeroIndex = (target: number[], currIndex: number) => {
+  const nextIndex = currIndex + 1
+  const value = target[nextIndex]
+  // 如果大于0则找到返回
+  if (value !== 0 && value > -10) {
+    return nextIndex
+  }
+  // 如果不大于0并且是最后一位了则返回
+  if (nextIndex === target.length - 1) {
+    return nextIndex
+  }
+
+  return getThanZeroIndex(target, nextIndex)
 }
