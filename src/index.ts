@@ -1,5 +1,5 @@
-import { joinNumber, reduceVData } from './utils'
-import { getVData, vPlus } from './vMath'
+import { vPlus } from './math'
+import { getVData, joinNumber, reduceVData } from './utils'
 
 /**
  * 加法

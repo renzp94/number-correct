@@ -1,5 +1,3 @@
-import type { VData, VNumber } from './vMath'
-
 /**
  * 将数字字符串转换成数字数组
  * @param v 数字字符串
@@ -56,4 +54,108 @@ export const reduceVData = (
     (prev, curr) => transformNumberArray(computed(prev, curr)).reverse(),
     target.defaultData,
   )
+}
+
+type Operation = (
+  curr: number,
+  next: number,
+  result: number[],
+  index: number,
+) => number[]
+
+export interface VNumber {
+  integer: number[]
+  decimal: number[]
+}
+
+/**
+ * 创建竖式计算函数
+ * @param operation 计算方式函数
+ * @returns 返回计算结果的字符串
+ */
+export const createVCalc = (operation: Operation) => {
+  return (currList: number[], nextList: number[]) => {
+    // console.log('currList', currList)
+    // console.log('nextList', nextList)
+    const currCount = currList?.length ?? 0
+    const nextCount = nextList?.length ?? 0
+    const count = currCount > nextCount ? currCount : nextCount
+    let result = createNumberArray(count)
+
+    let index = 0
+    do {
+      const curr = currList[index] ?? 0
+      const next = nextList[index] ?? 0
+      result = operation(curr, next, result, index)
+      index++
+    } while (index < count)
+
+    return result.reverse().join('')
+  }
+}
+
+export interface VData {
+  data: number[][]
+  defaultData: number[]
+  maxLen: number
+}
+
+/**
+ * 获取竖式计算的数据
+ * @param numbers 相加数值数组
+ * @returns [整数数据，小数数据]
+ */
+export const getVData = (numbers: Array<string | number>): [VData, VData] => {
+  // 拆分整数和小数
+  const list: VNumber[] = numbers.map((v) => {
+    const [integer, decimal] = v.toString().split('.')
+
+    return {
+      integer: transformNumberArray(integer),
+      decimal: transformNumberArray(decimal),
+    }
+  })
+
+  // 整数最大位数
+  const integerMaxLen = list.reduce(createGetMaxLenReduce('integer'), 0)
+  // 小数最大位数
+  const decimalMaxLen = list.reduce(createGetMaxLenReduce('decimal'), 0)
+
+  const integerList: number[][] = []
+  const decimalList: number[][] = []
+
+  list.forEach((item) => {
+    // 整数一定有，根据最大位数用0补齐所有位数
+    const integerZeroList = createNumberArray(
+      integerMaxLen - item.integer.length,
+    )
+    // 整数要先反转再补位
+    const integer = item.integer.reverse().concat(integerZeroList)
+    integerList.push(integer)
+    // 小数如果有也根据最大位数用0补齐所有位数
+    if (decimalMaxLen > 0) {
+      const decimalZeroList = createNumberArray(
+        decimalMaxLen - item.decimal.length,
+      )
+      const decimal = item.decimal.concat(decimalZeroList).reverse()
+      decimalList.push(decimal)
+    }
+  })
+
+  // 少一位补0，用于空出进位位置
+  const defaultIntegerList = createNumberArray(integerMaxLen - 1)
+  const defaultDecimalList = createNumberArray(decimalMaxLen)
+
+  return [
+    {
+      data: integerList,
+      defaultData: defaultIntegerList,
+      maxLen: integerMaxLen,
+    },
+    {
+      data: decimalList,
+      defaultData: defaultDecimalList,
+      maxLen: decimalMaxLen,
+    },
+  ]
 }
