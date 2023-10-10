@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/renzp94/number-correct.git"
   },
-  "module": "index.ts",
+  "module": "./dist/index.js",
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
     "standard-version": "^9.5.0",
@@ -18,9 +18,7 @@
     "url": "https://github.com/renzp94/number-correct/issues"
   },
   "main": "./dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "types": "./dist/index.d.ts",
   "homepage": "https://github.com/renzp94/number-correct#readme",
   "keywords": [
