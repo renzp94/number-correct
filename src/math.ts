@@ -25,7 +25,6 @@ const _plus: Operation = (
 ) => {
   let [unit, ten] = transformNumberArray((curr + next).toString()).reverse()
 
-  // console.log(`${curr} + ${next} = ${ten ?? ''}${unit}`)
   // 将上一位的进位加上，如果没有进位则加0
   result[index] = result[index] + unit
   // 拆分当前计算位是否需要进位，拆分了之后才是当前位计算的结果
@@ -39,13 +38,9 @@ const _plus: Operation = (
   // 将真正的当前位的值赋值
   result[index] = unit
 
-  // console.log('unit', unit, 'ten', ten)
-
   if (ten) {
     result[index + 1] = (result[index + 1] ?? 0) + ten
   }
-
-  // console.log('result[index]', result[index])
 
   return result
 }
@@ -74,8 +69,6 @@ const _minus: Operation = (
 
   let v = curr + borrowValue - next
 
-  // console.log(`${curr} + ${borrowValue} - ${next} = ${v}`)
-
   // 如果不够减并且还有高位则做借位处理
   if (v < 0 && index < result.length - 1) {
     // 通过记录的借位信息重新计算一下currList
@@ -87,17 +80,14 @@ const _minus: Operation = (
 
       return item
     })
-    // console.log('computedCurrList', computedCurrList)
     // 获取可以借位的下标和值
     const borrowIndex = getThanZeroIndex(computedCurrList, index)
-    // console.log('borrowIndex', borrowIndex)
     // 如果存在可借的位则做借位处理
     if (borrowIndex > 0) {
       // 借一位给当前数
       const currV = Number(`1${curr}`) + result[index]
       // 重新计算值
       v = currV - next
-      // console.log(curr, result[index], currV)
       // 借位的位数值使用-1记一下
       result[borrowIndex] = result[borrowIndex] - 1
       let iterationIndex = index
@@ -106,8 +96,6 @@ const _minus: Operation = (
         result[iterationIndex] = result[iterationIndex] - 1
         iterationIndex++
       } while (iterationIndex < borrowIndex)
-
-      // console.log(`${currV} - ${next} = ${v}`)
     }
   }
   // 最后一位且向高位借过位标记借过1次，主要是用于小数向整数借位
@@ -116,8 +104,6 @@ const _minus: Operation = (
   }
 
   result[index] = v
-
-  // console.log('result', result)
 
   return result
 }

@@ -70,8 +70,6 @@ export interface VNumber {
  */
 export const createVCalc = (operation: Operation) => {
   return (currList: number[], nextList: number[]) => {
-    // console.log('currList', currList)
-    // console.log('nextList', nextList)
     const currCount = currList?.length ?? 0
     const nextCount = nextList?.length ?? 0
     const count = currCount > nextCount ? currCount : nextCount
