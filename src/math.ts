@@ -116,8 +116,8 @@ const _minus: Operation = (
   }
 
   result[index] = v
+
   // console.log('result', result)
-  // console.log('+++++++++')
 
   return result
 }

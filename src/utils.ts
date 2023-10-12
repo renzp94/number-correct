@@ -169,3 +169,18 @@ export const getThanZeroIndex = (target: number[], currIndex: number) => {
 
   return getThanZeroIndex(target, nextIndex)
 }
+
+/**
+ * 移除数字字符串前面无效的0
+ * @param number 数字字符串
+ * @returns 返回移除后的数字字符串
+ */
+export const replaceBeforeInvalidZero = (numbers: number[]) => {
+  if (numbers.length > 1 && numbers?.at(-1) === 0) {
+    let str = [...numbers].reverse().join('')
+    str = str.replace(/^0+/, '')
+    return transformNumberArray(str).reverse()
+  }
+
+  return numbers
+}
