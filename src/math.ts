@@ -17,12 +17,7 @@ export type Operation = (
  * @param index 初始数组当前下标
  * @returns 相加之后的数组
  */
-const _plus: Operation = (
-  curr: number,
-  next: number,
-  result: number[],
-  index: number,
-) => {
+const _plus: Operation = (curr, next, result, index) => {
   let [unit, ten] = transformNumberArray((curr + next).toString()).reverse()
 
   // 将上一位的进位加上，如果没有进位则加0
@@ -48,13 +43,7 @@ const _plus: Operation = (
 /**
  * 减法实现
  */
-const _minus: Operation = (
-  curr: number,
-  next: number,
-  result: number[],
-  index: number,
-  currList: number[],
-) => {
+const _minus: Operation = (curr, next, result, index, currList) => {
   // 被借数值(负数)
   let borrowValue = result[index]
   // 如果被借过则需要算上被借数值
