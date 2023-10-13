@@ -1,3 +1,4 @@
+import { plus } from '.'
 import type { Operation } from './math'
 
 /**
@@ -5,8 +6,8 @@ import type { Operation } from './math'
  * @param v 数字字符串
  * @returns
  */
-export const transformNumberArray = (v: string) =>
-  v?.split('')?.map(Number) ?? []
+export const transformNumberArray = (v: string | number) =>
+  v?.toString()?.split('')?.map(Number) ?? []
 /**
  * 创建一个获取数组中元素最大长度值的reduce函数
  * @param filed 属性
@@ -181,4 +182,43 @@ export const replaceBeforeInvalidZero = (numbers: number[]) => {
   }
 
   return numbers
+}
+/**
+ * 是否为负数
+ * @param v 数字或数字字符串
+ * @returns 是返回true，否则返回false
+ */
+export const isNegativeNumber = (v: string | number) =>
+  v?.toString()?.includes('-')
+/**
+ * 移除首个负号
+ * @param v 数字或数字字符串
+ * @returns 返回移除后的字符串
+ */
+export const removeMinusSign = (v: string | number) =>
+  v?.toString()?.replace('-', '')
+/**
+ * 从数组中筛选出来正数和负数
+ * @param numbers 数字数组
+ * @returns [正数数组，负数数组]
+ */
+export const getSymbolNumbers = (numbers: Array<string | number>) => {
+  const negativeNumbers = numbers.filter(isNegativeNumber)
+  const positiveNumbers = numbers.filter((v) => !negativeNumbers.includes(v))
+
+  return [positiveNumbers, negativeNumbers]
+}
+/**
+ * 负数相加
+ * @param numbers 负数数组
+ * @returns 返回相加后的值
+ */
+export const plusNegativeNumber = (numbers: Array<string | number>) => {
+  let negativeNumber = removeMinusSign(numbers?.[0])
+  if (numbers.length > 1) {
+    // 将负数转为正数，然后相加
+    negativeNumber = plus(...numbers.map(removeMinusSign))
+  }
+
+  return negativeNumber
 }

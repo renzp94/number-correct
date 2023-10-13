@@ -1,8 +1,12 @@
 import { vMinus, vPlus } from './math'
 import {
+  getSymbolNumbers,
   getVData,
+  isNegativeNumber,
   joinNumber,
+  plusNegativeNumber,
   reduceVData,
+  removeMinusSign,
   replaceBeforeInvalidZero,
 } from './utils'
 
@@ -13,8 +17,7 @@ import {
  * @returns 相加结果的字符串
  */
 export const plus = (...numbers: Array<string | number>) => {
-  let borrowNumbers = numbers.filter((v) => v.toString().includes('-'))
-  const positiveNumbers = numbers.filter((v) => !borrowNumbers.includes(v))
+  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(numbers)
   // 假设只有一个数
   let result: string = positiveNumbers?.[0]?.toString()
   // 如果有多个则进行多数加法
@@ -36,18 +39,10 @@ export const plus = (...numbers: Array<string | number>) => {
     result = joinNumber(integer, decimal)
   }
 
-  if (borrowNumbers.length) {
-    // 如果存在负数，则将负数整理成一个集合
-    let borrowNumber = borrowNumbers?.[0]?.toString()?.replace('-', '')
-    if (borrowNumbers.length > 1) {
-      // 将负数转为正数
-      borrowNumbers = borrowNumbers.map((v) => v.toString().replace('-', ''))
-      // 相加
-      borrowNumber = plus(...borrowNumbers)
-    }
-
-    if (borrowNumber) {
-      result = result ? minus(result, borrowNumber) : `-${borrowNumber}`
+  if (negativeNumbers.length) {
+    const negativeNumber = plusNegativeNumber(negativeNumbers)
+    if (negativeNumber) {
+      result = result ? minus(result, negativeNumber) : `-${negativeNumber}`
     }
   }
 
@@ -65,23 +60,15 @@ export const minus = (
   ...numbers: Array<string | number>
 ) => {
   let reductionValue = reduction
-  let borrowNumbers = numbers.filter((v) => v.toString().includes('-'))
-  const positiveNumbers = numbers.filter((v) => !borrowNumbers.includes(v))
-  if (borrowNumbers.length) {
-    // 如果存在负数，则将负数整理成一个集合
-    let borrowNumber = borrowNumbers?.[0]?.toString()?.replace('-', '')
-    if (borrowNumbers.length > 1) {
-      // 将负数转为正数
-      borrowNumbers = borrowNumbers.map((v) => v.toString().replace('-', ''))
-      // 相加
-      borrowNumber = plus(...borrowNumbers)
-    }
-    if (borrowNumber) {
-      if (reductionValue.toString()?.includes('-')) {
-        reductionValue = reductionValue.toString().replace('-', '')
-        reductionValue = `-${minus(reductionValue, borrowNumber)}`
+  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(numbers)
+  if (negativeNumbers.length) {
+    const negativeNumber = plusNegativeNumber(negativeNumbers)
+    if (negativeNumber) {
+      if (isNegativeNumber(reductionValue)) {
+        reductionValue = removeMinusSign(reductionValue)
+        reductionValue = `-${minus(reductionValue, negativeNumber)}`
       } else {
-        reductionValue = plus(reductionValue, borrowNumber)
+        reductionValue = plus(reductionValue, negativeNumber)
       }
     }
   }
@@ -91,9 +78,9 @@ export const minus = (
     minuend = plus(...positiveNumbers)
   }
   // 如果减数是负数，则做加法运算
-  if (reductionValue.toString()?.includes('-')) {
+  if (isNegativeNumber(reductionValue)) {
     // 减数转为正数
-    reductionValue = reductionValue.toString().replace('-', '')
+    reductionValue = removeMinusSign(reductionValue)
     // 相加后结果转为负数
     reductionValue = `-${plus(reductionValue, minuend)}`
     return reductionValue

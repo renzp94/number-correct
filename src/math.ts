@@ -18,14 +18,12 @@ export type Operation = (
  * @returns 相加之后的数组
  */
 const _plus: Operation = (curr, next, result, index) => {
-  let [unit, ten] = transformNumberArray((curr + next).toString()).reverse()
+  let [unit, ten] = transformNumberArray(curr + next).reverse()
 
   // 将上一位的进位加上，如果没有进位则加0
   result[index] = result[index] + unit
   // 拆分当前计算位是否需要进位，拆分了之后才是当前位计算的结果
-  const [indexUnit, indexTen] = transformNumberArray(
-    result[index].toString(),
-  ).reverse()
+  const [indexUnit, indexTen] = transformNumberArray(result[index]).reverse()
 
   unit = indexUnit
   // 如果当前位在未拆分前计算的结果就已经进位则无需使用拆分后的进位值
