@@ -1,6 +1,7 @@
 import { minus } from '.'
 import { isNegativeNumber, removeMinusSign } from './utils'
 
+type ComparedReturnValue = -1 | 0 | 1
 /**
  * 比大小
  * @param compareValue 比较值
@@ -10,18 +11,18 @@ import { isNegativeNumber, removeMinusSign } from './utils'
 export const compared = (
   compareValue: string | number,
   comparedValue: string | number,
-) => {
+): ComparedReturnValue => {
   // 目标值是否为负数
   const isCNV = isNegativeNumber(compareValue)
   // 被比较值是否为负数
   const isCedNV = isNegativeNumber(comparedValue)
   // 目标值为正，被比较值为负
   if (!isCNV && isCedNV) {
-    return true
+    return 1
   }
   // 目标值为负，被比较值为正
   if (isCNV && !isCedNV) {
-    return false
+    return -1
   }
   let tValue = compareValue
   let cValue = comparedValue
@@ -39,10 +40,10 @@ export const compared = (
   }
   const isResultNV = isNegativeNumber(result)
   // 如果相减结果为负，则为小于，否则为大于
-  let status = isResultNV ? -1 : 1
+  let status: ComparedReturnValue = isResultNV ? -1 : 1
   // 如果全为负，则status取反
   if (isAllNV) {
-    status = 0 - status
+    status = (0 - status) as ComparedReturnValue
   }
 
   return status

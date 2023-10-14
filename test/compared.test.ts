@@ -55,6 +55,14 @@ test('2 > 1', () => {
   expect(isGreat(2, 1)).toBe(true)
 })
 
+test('-2 < 1', () => {
+  expect(isGreat(-2, 1)).toBe(false)
+})
+
+test('1 > -2', () => {
+  expect(isGreat(1, -2)).toBe(true)
+})
+
 test('-1 > -2', () => {
   expect(isGreat(-1, -2)).toBe(true)
 })
@@ -69,6 +77,14 @@ test('2 < 3', () => {
 
 test('-3 < -2', () => {
   expect(isLess(-3, -2)).toBe(true)
+})
+
+test('-10 < 1', () => {
+  expect(isLess('-10', 1)).toBe(true)
+})
+
+test('1 > -1', () => {
+  expect(isLess(1, -1)).toBe(false)
 })
 
 test('2 <= 3', () => {
