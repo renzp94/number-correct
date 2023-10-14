@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/renzp94/number-correct/compare/v0.0.3...v0.0.4) (2023-10-14)
+
+
+### 其他
+
+* 移除无用类型声明 ([a9dc933](https://github.com/renzp94/number-correct/commit/a9dc933ceada9a6b4b0b2477dce43794b78138c5))
+
+
+### 代码重构
+
+* 抽取公共代码方法 ([ee2b380](https://github.com/renzp94/number-correct/commit/ee2b380b0ab7bd1aad4528ffd32f7a9f675b7dde))
+
+
+### Bug修复
+
+* 修复replaceBeforeInvalidZero函数在全为0时返回[]，应该返回[0]的问题 ([f8e5558](https://github.com/renzp94/number-correct/commit/f8e55582e133349af9e2530c46f85ef1cdba13f8))
+
+
+### 新功能
+
+* 添加比大小功能 ([3d3cf39](https://github.com/renzp94/number-correct/commit/3d3cf39ebe59335cb2921ee1c7e1e7a1e74bb006))
+
 ### [0.0.3](https://github.com/renzp94/number-correct/compare/v0.0.2...v0.0.3) (2023-10-12)
 
 
