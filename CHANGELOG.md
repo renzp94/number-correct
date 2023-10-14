@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/renzp94/number-correct/compare/v0.0.4...v0.0.5) (2023-10-14)
+
+
+### 新功能
+
+* 添加isGreat(>)、isLess(<)、isEqual(=)、isGreatEqual(>=)、isLessEqual(<=)快捷比较方法 ([ae51548](https://github.com/renzp94/number-correct/commit/ae51548747041d1f18e247db74ad16450d2fe7f0))
+
 ### [0.0.4](https://github.com/renzp94/number-correct/compare/v0.0.3...v0.0.4) (2023-10-14)
 
 
