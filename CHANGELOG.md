@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/renzp94/number-correct/compare/v0.0.5...v0.0.6) (2023-10-14)
+
+
+### Bug修复
+
+* **compared:** 修复compared函数一正一负比大小返回结果错误的问题 ([f71a4c2](https://github.com/renzp94/number-correct/commit/f71a4c2e32ef511d37f8e811f566e893de6edf16))
+
 ### [0.0.5](https://github.com/renzp94/number-correct/compare/v0.0.4...v0.0.5) (2023-10-14)
 
 
