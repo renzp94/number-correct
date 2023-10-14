@@ -178,7 +178,7 @@ export const replaceBeforeInvalidZero = (numbers: number[]) => {
   if (numbers.length > 1 && numbers?.at(-1) === 0) {
     let str = [...numbers].reverse().join('')
     str = str.replace(/^0+/, '')
-    return transformNumberArray(str).reverse()
+    return str ? transformNumberArray(str).reverse() : [0]
   }
 
   return numbers
