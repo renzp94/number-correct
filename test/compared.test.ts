@@ -1,59 +1,80 @@
-import { compared } from '../src'
+import {
+  compared,
+  isEqual,
+  isGreat,
+  isGreatEqual,
+  isLess,
+  isLessEqual,
+} from '../src'
 // @ts-ignore
 import { expect, test } from 'bun:test'
 
 test('0 = 0', () => {
-  expect(compared(0, 0)).toBe(0)
+  expect(isEqual(0, 0)).toBe(true)
 })
 
 test('-0 = 0', () => {
-  expect(compared(-0, 0)).toBe(0)
+  expect(isEqual(-0, 0)).toBe(true)
 })
 
 test('0 = -0', () => {
-  expect(compared(0, -0)).toBe(0)
+  expect(isEqual(0, -0)).toBe(true)
 })
 
 test('1 = 1', () => {
-  expect(compared(1, 1)).toBe(0)
+  expect(isEqual(1, 1)).toBe(true)
 })
 
 test('1.00000 = 1', () => {
-  expect(compared('1.00000', 1)).toBe(0)
+  expect(isEqual('1.00000', 1)).toBe(true)
 })
 
 test('1 = 1.0000', () => {
-  expect(compared(1, '1.0000')).toBe(0)
+  expect(isEqual(1, '1.0000')).toBe(true)
 })
 
 test('99999999999999999999.11111 = 99999999999999999999.11111', () => {
   expect(
-    compared('99999999999999999999.11111', '99999999999999999999.11111'),
-  ).toBe(0)
+    isEqual('99999999999999999999.11111', '99999999999999999999.11111'),
+  ).toBe(true)
 })
 
 test('-99999999999999999999.11111 = -99999999999999999999.11111', () => {
   expect(
-    compared('-99999999999999999999.11111', '-99999999999999999999.11111'),
-  ).toBe(0)
+    isEqual('-99999999999999999999.11111', '-99999999999999999999.11111'),
+  ).toBe(true)
+})
+
+test('-99999999999999999999.11111 != -0.1199999999999999999999111', () => {
+  expect(
+    isEqual('-99999999999999999999.11111', '-0.1199999999999999999999111'),
+  ).toBe(false)
 })
 
 test('2 > 1', () => {
-  expect(compared(2, 1)).toBe(1)
+  expect(isGreat(2, 1)).toBe(true)
 })
 
 test('-1 > -2', () => {
-  expect(compared(-1, -2)).toBe(1)
+  expect(isGreat(-1, -2)).toBe(true)
 })
 
 test('-999999999.11111 > -9999999999.11111', () => {
-  expect(compared('-999999999.11111', '-9999999999.11111')).toBe(1)
+  expect(isGreat('-999999999.11111', '-9999999999.11111')).toBe(true)
 })
 
 test('2 < 3', () => {
-  expect(compared(2, 3)).toBe(-1)
+  expect(isLess(2, 3)).toBe(true)
 })
 
 test('-3 < -2', () => {
-  expect(compared(-3, -2)).toBe(-1)
+  expect(isLess(-3, -2)).toBe(true)
+})
+
+test('2 <= 3', () => {
+  expect(isLessEqual(2, 3)).toBe(true)
+})
+
+test('-2 >= -3', () => {
+  expect(isGreatEqual(-2, -3)).toBe(true)
 })
