@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/renzp94/number-correct/compare/v0.0.6...v0.0.7) (2023-10-17)
+
+
+### 其他
+
+* 更新README ([d07c362](https://github.com/renzp94/number-correct/commit/d07c362f013f88ac3ceb6023375520734d752c81))
+* 添加lint忽略目录 ([318677f](https://github.com/renzp94/number-correct/commit/318677f762b900c76af5f50e82fefaa5bcd19d0f))
+
+
+### 新功能
+
+* 添加乘法功能 ([f6c26a6](https://github.com/renzp94/number-correct/commit/f6c26a6ec3a86b0f64163ccef4dcaa4d2e093094))
+
 ### [0.0.6](https://github.com/renzp94/number-correct/compare/v0.0.5...v0.0.6) (2023-10-14)
 
 
