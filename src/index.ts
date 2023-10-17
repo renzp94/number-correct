@@ -138,7 +138,7 @@ export const minus = (
 }
 
 /**
- * 加法
+ * 乘法
  * @param numbers 要相乘的数
  * @returns 相加结果的字符串
  */
