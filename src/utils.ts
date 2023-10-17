@@ -24,8 +24,8 @@ export const createGetMaxLenReduce = (filed: 'integer' | 'decimal') => {
  * @param length 数组长度
  * @returns
  */
-export const createNumberArray = (length: number) =>
-  Array.from({ length }).fill(0) as number[]
+export const createNumberArray = (length: number, value = 0) =>
+  Array.from({ length }).fill(value) as number[]
 /**
  * 拼接整数数组和小数数组为一个数
  * @param integer 整数数组
@@ -71,6 +71,7 @@ export interface VNumber {
  */
 export const createVCalc = (operation: Operation) => {
   return (currList: number[], nextList: number[]) => {
+    // console.log('currList', currList, 'nextList', nextList)
     const currCount = currList?.length ?? 0
     const nextCount = nextList?.length ?? 0
     const count = currCount > nextCount ? currCount : nextCount
@@ -99,14 +100,17 @@ export interface VData {
  * @param numbers 相加数值数组
  * @returns [整数数据，小数数据]
  */
-export const getVData = (numbers: Array<string | number>): [VData, VData] => {
+export const getVData = (
+  numbers: Array<string | number>,
+  defaultDataFillValue = 0,
+): [VData, VData] => {
   // 拆分整数和小数
   const list: VNumber[] = numbers.map((v) => {
     const [integer, decimal] = v.toString().split('.')
 
     return {
       integer: transformNumberArray(integer),
-      decimal: transformNumberArray(decimal),
+      decimal: decimal ? transformNumberArray(decimal) : [],
     }
   })
 
@@ -122,6 +126,7 @@ export const getVData = (numbers: Array<string | number>): [VData, VData] => {
     // 整数一定有，根据最大位数用0补齐所有位数
     const integerZeroList = createNumberArray(
       integerMaxLen - item.integer.length,
+      defaultDataFillValue,
     )
     // 整数要先反转再补位
     const integer = item.integer.reverse().concat(integerZeroList)
@@ -130,6 +135,7 @@ export const getVData = (numbers: Array<string | number>): [VData, VData] => {
     if (decimalMaxLen > 0) {
       const decimalZeroList = createNumberArray(
         decimalMaxLen - item.decimal.length,
+        defaultDataFillValue,
       )
       const decimal = item.decimal.concat(decimalZeroList).reverse()
       decimalList.push(decimal)
@@ -137,8 +143,14 @@ export const getVData = (numbers: Array<string | number>): [VData, VData] => {
   })
 
   // 少一位补0，用于空出进位位置
-  const defaultIntegerList = createNumberArray(integerMaxLen - 1)
-  const defaultDecimalList = createNumberArray(decimalMaxLen)
+  const defaultIntegerList = createNumberArray(
+    integerMaxLen - 1,
+    defaultDataFillValue,
+  )
+  const defaultDecimalList = createNumberArray(
+    decimalMaxLen,
+    defaultDataFillValue,
+  )
 
   return [
     {
@@ -152,6 +164,32 @@ export const getVData = (numbers: Array<string | number>): [VData, VData] => {
       maxLen: decimalMaxLen,
     },
   ]
+}
+
+/**
+ * 获取竖式计算的数据
+ * @param numbers 相加数值数组
+ * @returns [整数数据，小数数据]
+ */
+export const getOnlyIntegerVData = (
+  numbers: Array<string | number>,
+  defaultDataFillValue = 0,
+): VData => {
+  const integerList = numbers.map((item) =>
+    item.toString().split('').reverse().map(Number),
+  )
+  const maxLen = integerList.reduce(
+    (prev, curr) => (curr.length > prev ? curr.length : prev),
+    0,
+  )
+  // 少一位补0，用于空出进位位置
+  const defaultIntegerList = createNumberArray(maxLen, defaultDataFillValue)
+
+  return {
+    data: integerList,
+    defaultData: defaultIntegerList,
+    maxLen,
+  }
 }
 
 export const getThanZeroIndex = (target: number[], currIndex: number) => {
@@ -183,6 +221,39 @@ export const replaceBeforeInvalidZero = (numbers: number[]) => {
 
   return numbers
 }
+
+/**
+ * 移除数字字符串前后面无效的0
+ * @param number 数字字符串
+ * @returns 返回移除后的数字字符串
+ */
+export const replaceInvalidZero = (number: string) => {
+  let [integer, decimal] = number.split('.')
+  integer = integer.replace(/^0+/, '')
+  decimal = decimal?.replace(/0+$/, '')
+
+  let result = integer ? integer : '0'
+  if (decimal) {
+    result += `.${decimal}`
+  }
+
+  return result
+}
+
+/**
+ * 移除小数数字字符串为整数时后面无效的0
+ * @param number 数字字符串
+ * @returns 返回移除后的数字字符串
+ */
+export const replaceDecimalInvalidZero = (
+  number: string,
+  decimalPoint: number,
+) => {
+  const decimalList = number.split('').reverse()
+  decimalList.splice(decimalPoint, 0, '.')
+  return decimalList.reverse().join('')
+}
+
 /**
  * 是否为负数
  * @param v 数字或数字字符串

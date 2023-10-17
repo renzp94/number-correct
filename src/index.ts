@@ -1,5 +1,7 @@
-import { vMinus, vPlus } from './math'
+import { vMinus, vPlus, vTimes } from './math'
 import {
+  createNumberArray,
+  getOnlyIntegerVData,
   getSymbolNumbers,
   getVData,
   isNegativeNumber,
@@ -8,13 +10,14 @@ import {
   reduceVData,
   removeMinusSign,
   replaceBeforeInvalidZero,
+  replaceDecimalInvalidZero,
+  replaceInvalidZero,
 } from './utils'
 
 export * from './compared'
 
 /**
  * 加法
- * plus
  * @param numbers 要相加的数
  * @returns 相加结果的字符串
  */
@@ -132,4 +135,52 @@ export const minus = (
   }
 
   return result
+}
+
+/**
+ * 加法
+ * @param numbers 要相乘的数
+ * @returns 相加结果的字符串
+ */
+export const times = (...numbers: Array<string | number>) => {
+  const hasZero = numbers.some((v) => Number(v) === 0)
+  // 0乘任何数都为0
+  if (hasZero) {
+    return '0'
+  }
+  // 获取负数个数
+  const negativeNumberCount = numbers.filter(isNegativeNumber).length
+  // 如果是双数的话则结果为正，否则为负
+  const symbol = negativeNumberCount % 2 === 0 ? '' : '-'
+  let positiveNumbers = numbers.map(removeMinusSign)
+  // 假设只有一个数
+  let result: string = positiveNumbers?.[0]?.toString()
+  // 如果有多个则进行多数加法
+  if (positiveNumbers.length > 1) {
+    // 算出小数位的长度
+    const decimalPoint = positiveNumbers.reduce((prev, curr) => {
+      const [_, decimal] = curr.split('.')
+      return prev + (decimal?.length ?? 0)
+    }, 0)
+    // 将小数全部转化为整数
+    positiveNumbers = positiveNumbers.map((item) => item.replace('.', ''))
+    const vInteger = getOnlyIntegerVData(positiveNumbers)
+    // 过滤掉整数数组中全部为0数组
+    vInteger.data = vInteger.data.filter((item) => !item.every((v) => v === 0))
+    vInteger.defaultData = vInteger.data.shift() ?? []
+
+    // 算出整数
+    const integer: Array<number | string> = reduceVData(
+      vInteger,
+      vTimes,
+    ).reverse()
+    if (decimalPoint > 0) {
+      const zeroList = createNumberArray(decimalPoint)
+      integer.unshift(...zeroList)
+      integer.splice(integer.length - decimalPoint, 0, '.')
+    }
+    result = replaceInvalidZero(integer.join(''))
+  }
+
+  return `${symbol}${result}`
 }

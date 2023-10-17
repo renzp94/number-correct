@@ -1,4 +1,11 @@
-import { createVCalc, getThanZeroIndex, transformNumberArray } from './utils'
+import { plus } from '.'
+import {
+  createNumberArray,
+  createVCalc,
+  getThanZeroIndex,
+  replaceInvalidZero,
+  transformNumberArray,
+} from './utils'
 
 export type Operation = (
   curr: number,
@@ -10,7 +17,7 @@ export type Operation = (
 ) => number[]
 
 /**
- * 加法实现
+ * 加法
  * @param curr 当前值
  * @param next 下一个值
  * @param result 初始数组
@@ -39,7 +46,12 @@ const _plus: Operation = (curr, next, result, index) => {
 }
 
 /**
- * 减法实现
+ * 减法
+ * @param curr 当前值
+ * @param next 下一个值
+ * @param result 初始数组
+ * @param index 初始数组当前下标
+ * @returns 相减之后的数组
  */
 const _minus: Operation = (curr, next, result, index, currList) => {
   // 被借数值(负数)
@@ -97,3 +109,53 @@ const _minus: Operation = (curr, next, result, index, currList) => {
 
 export const vPlus = createVCalc(_plus)
 export const vMinus = createVCalc(_minus)
+
+/**
+ * 乘法
+ * @param curr 当前值
+ * @param next 下一个值
+ * @param result 初始数组
+ * @param index 初始数组当前下标
+ * @returns 相乘之后的数组
+ */
+export const vTimes = (currList: number[], nextList: number[]) => {
+  // 获取相差位数
+  const diffCount = currList.length - nextList.length
+  // 相差位数绝对值
+  const diffCountAbs = Math.abs(diffCount)
+  let cList = currList
+  let nList = nextList
+  const zeroList = createNumberArray(diffCountAbs)
+  // 如果大于0则对nList补齐位数
+  if (diffCount > 0) {
+    nList = zeroList.concat(nList)
+  }
+  // 如果小于0则对cList补齐位数
+  if (diffCount < 0) {
+    cList = zeroList.concat(cList)
+  }
+  const productResult = nList.map((item, nextIndex) => {
+    // 将下一个数组中的每个数乘以当前数组的每个值
+    const products: string[] = cList.reduce((prev, curr, currIndex) => {
+      // 根据下标算出所在位数
+      const count = nextIndex + currIndex
+      // 进行位数补0
+      const digit = ''.padEnd(count, '0')
+      prev.push(`${item * curr}${digit}`)
+      return prev
+    }, [])
+    // 等到当前数组的所有积然后相加
+    return plus(...products)
+  })
+  // 将通过下一个数组的每个值乘以当前数组的每个值等到的和相加，则得到当前数组✖️下一个数组的积
+  let result = plus(...productResult)
+  const list = result.split('')
+  const len = result.length - diffCountAbs
+  // 因为是小数转成整数的，所以要剔除后面无用的0
+  list.splice(len, diffCountAbs)
+  // 剔除前面无用的0
+  result = replaceInvalidZero(list.join(''))
+
+  console.log(result)
+  return result
+}
