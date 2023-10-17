@@ -155,7 +155,5 @@ export const vTimes = (currList: number[], nextList: number[]) => {
   list.splice(len, diffCountAbs)
   // 剔除前面无用的0
   result = replaceInvalidZero(list.join(''))
-
-  console.log(result)
   return result
 }
