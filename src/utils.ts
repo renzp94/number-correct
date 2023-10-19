@@ -105,14 +105,7 @@ export const getVData = (
   defaultDataFillValue = 0,
 ): [VData, VData] => {
   // 拆分整数和小数
-  const list: VNumber[] = numbers.map((v) => {
-    const [integer, decimal] = v.toString().split('.')
-
-    return {
-      integer: transformNumberArray(integer),
-      decimal: decimal ? transformNumberArray(decimal) : [],
-    }
-  })
+  const list: VNumber[] = getVNumberList(numbers)
 
   // 整数最大位数
   const integerMaxLen = list.reduce(createGetMaxLenReduce('integer'), 0)
@@ -205,6 +198,22 @@ export const getThanZeroIndex = (target: number[], currIndex: number) => {
   }
 
   return getThanZeroIndex(target, nextIndex)
+}
+
+/**
+ * 获取竖式计算的数据
+ * @param numbers 相加数值数组
+ * @returns [整数数据，小数数据]
+ */
+export const getVNumberList = (numbers: Array<string | number>): VNumber[] => {
+  return numbers.map((v) => {
+    const [integer, decimal] = v.toString().split('.')
+
+    return {
+      integer: transformNumberArray(integer),
+      decimal: decimal ? transformNumberArray(decimal) : [],
+    }
+  })
 }
 
 /**

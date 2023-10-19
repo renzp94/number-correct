@@ -1,7 +1,31 @@
-import { minus } from '.'
-import { isNegativeNumber, removeMinusSign } from './utils'
+import {
+  getVNumberList,
+  isNegativeNumber,
+  removeMinusSign,
+  replaceInvalidZero,
+} from './utils'
 
 type ComparedReturnValue = -1 | 0 | 1
+
+const _compared = (vTVNumbers: number[], vCVNumbers: number[]) => {
+  let status: ComparedReturnValue = 0
+
+  for (const _ in vTVNumbers) {
+    const vTValue = vTVNumbers.shift()
+    const vCValue = vCVNumbers.shift() ?? -1
+
+    if (vTValue > vCValue) {
+      status = 1
+      break
+    }
+    if (vTValue < vCValue) {
+      status = -1
+      break
+    }
+  }
+
+  return status
+}
 /**
  * 比大小
  * @param compareValue 比较值
@@ -33,15 +57,24 @@ export const compared = (
     cValue = removeMinusSign(cValue)
   }
 
-  const result = minus(tValue, cValue)
-  // 如果相减为0则为等于
-  if (result === '0') {
-    return 0
+  tValue = replaceInvalidZero(tValue.toString())
+  cValue = replaceInvalidZero(cValue.toString())
+
+  const [vTVNumbers, vCVNumbers] = getVNumberList([tValue, cValue])
+  // 整数位多
+  if (vTVNumbers.integer.length > vCVNumbers.integer.length) {
+    return isAllNV ? -1 : 1
   }
-  const isResultNV = isNegativeNumber(result)
-  // 如果相减结果为负，则为小于，否则为大于
-  let status: ComparedReturnValue = isResultNV ? -1 : 1
-  // 如果全为负，则status取反
+  // 整数位少
+  if (vTVNumbers.integer.length < vCVNumbers.integer.length) {
+    return isAllNV ? 1 : -1
+  }
+
+  let status = _compared(vTVNumbers.integer, vCVNumbers.integer)
+  if (status === 0) {
+    status = _compared(vTVNumbers.decimal, vCVNumbers.decimal)
+  }
+
   if (isAllNV) {
     status = (0 - status) as ComparedReturnValue
   }
