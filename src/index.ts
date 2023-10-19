@@ -10,7 +10,6 @@ import {
   reduceVData,
   removeMinusSign,
   replaceBeforeInvalidZero,
-  replaceDecimalInvalidZero,
   replaceInvalidZero,
 } from './utils'
 
@@ -116,14 +115,18 @@ export const minus = (
     decimal.push(v)
   }
 
-  vInteger.defaultData = vInteger.data.shift().map((v, index, list) => {
-    let value = v
-    if (index === list.length - 1) {
-      value = value - borrowValue
-    }
+  let firstList = vInteger.data.shift()
+  if (borrowValue > 0) {
+    firstList = minus(firstList.reverse().join(''), borrowValue)
+      .split('')
+      .map(Number)
+      .reverse()
+  } else {
+    firstList = firstList.map((v, index) => (index === 0 ? v - borrowValue : v))
+  }
 
-    return value
-  })
+  vInteger.defaultData = firstList
+
   let integer = reduceVData(vInteger, vMinus)
   integer = replaceBeforeInvalidZero(integer)
   let result = joinNumber(integer, decimal)
