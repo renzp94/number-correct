@@ -1,3 +1,4 @@
+import { isGreatEqual } from './compared'
 import { vMinus, vPlus, vTimes } from './math'
 import {
   createNumberArray,
@@ -90,8 +91,13 @@ export const minus = (
     return reductionValue
   }
 
+  const isNumberGreatEqual = isGreatEqual(reductionValue, minuend)
+  const numberList = isNumberGreatEqual
+    ? [reductionValue, minuend]
+    : [minuend, reductionValue]
+
   // 将最前面的减数作为默认
-  const [vInteger, vDecimal] = getVData([reductionValue, minuend])
+  const [vInteger, vDecimal] = getVData(numberList)
   vDecimal.defaultData = vDecimal.data.shift() ?? []
   let decimal: number[] = []
   if (vDecimal.maxLen) {
@@ -117,10 +123,8 @@ export const minus = (
 
   let firstList = vInteger.data.shift()
   if (borrowValue > 0) {
-    firstList = minus(firstList.reverse().join(''), borrowValue)
-      .split('')
-      .map(Number)
-      .reverse()
+    const firstValue = minus(firstList.reverse().join(''), borrowValue)
+    firstList = firstValue.split('').map(Number).reverse()
   } else {
     firstList = firstList.map((v, index) => (index === 0 ? v - borrowValue : v))
   }
@@ -137,7 +141,7 @@ export const minus = (
     borrowNumber = borrowNumber.replace('NaN', '')
   }
 
-  return result
+  return isNumberGreatEqual ? result : `-${result}`
 }
 
 /**
