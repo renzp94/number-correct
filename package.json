@@ -10,6 +10,7 @@
   "module": "./dist/index.js",
   "devDependencies": {
     "@biomejs/biome": "^1.2.2",
+    "bun-types": "^1.0.6",
     "standard-version": "^9.5.0",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"

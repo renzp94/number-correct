@@ -1,5 +1,4 @@
 import { times } from '../src'
-// @ts-ignore
 import { expect, test } from 'bun:test'
 
 test('0 * 1 * 2 *  3 = 0', () => {

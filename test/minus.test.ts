@@ -1,5 +1,4 @@
 import { minus } from '../src'
-// @ts-ignore
 import { expect, test } from 'bun:test'
 
 test('6 - -1 - 2 - -3 = 8', () => {

@@ -1,12 +1,4 @@
-import {
-  compared,
-  isEqual,
-  isGreat,
-  isGreatEqual,
-  isLess,
-  isLessEqual,
-} from '../src'
-// @ts-ignore
+import { isEqual, isGreat, isGreatEqual, isLess, isLessEqual } from '../src'
 import { expect, test } from 'bun:test'
 
 test('0 = 0', () => {

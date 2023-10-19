@@ -1,5 +1,4 @@
 import { plus } from '../src'
-// @ts-ignore
 import { expect, test } from 'bun:test'
 
 test('-1.1 + 2.023 = 0.923', () => {
