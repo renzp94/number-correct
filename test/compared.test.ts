@@ -94,3 +94,7 @@ test('0.08 < 3.26', () => {
 test('8.023 > 1.1', () => {
   expect(isGreatEqual(8.023, 1.1)).toBe(true)
 })
+
+test('322 > 326', () => {
+  expect(isLess(322, 326)).toBe(true)
+})

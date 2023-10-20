@@ -10,9 +10,9 @@ type ComparedReturnValue = -1 | 0 | 1
 const _compared = (vTVNumbers: number[], vCVNumbers: number[]) => {
   let status: ComparedReturnValue = 0
 
-  for (const _ in vTVNumbers) {
-    const vTValue = vTVNumbers.shift()
-    const vCValue = vCVNumbers.shift() ?? -1
+  for (const index in vTVNumbers) {
+    const vTValue = vTVNumbers[index]
+    const vCValue = vCVNumbers[index] ?? -1
 
     if (vTValue > vCValue) {
       status = 1
