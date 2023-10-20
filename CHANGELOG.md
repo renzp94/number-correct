@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/renzp94/number-correct/compare/v0.0.7...v0.0.8) (2023-10-20)
+
+
+### 其他
+
+* 调整注释说明 ([1a5f431](https://github.com/renzp94/number-correct/commit/1a5f4312290319109aa4846380cac78d08a6049e))
+* 添加bun-types ([64986bf](https://github.com/renzp94/number-correct/commit/64986bf908aa9150f8c327b86348555ce39f1762))
+* 移除调试信息 ([f84165e](https://github.com/renzp94/number-correct/commit/f84165e80757d7dff48e8f8ca2246606e329fe10))
+
+
+### 代码重构
+
+* 重写比较大小核心逻辑不使用减法而使用竖式比较 ([409534b](https://github.com/renzp94/number-correct/commit/409534b73a52f62129d774b2a5a874e539b578f9))
+
+
+### Bug修复
+
+* 修复被减数为负数时计算错误的问题 ([5a68c7b](https://github.com/renzp94/number-correct/commit/5a68c7b7fefeb7aaa887b6c20051b24621049a89))
+* 修复减法处理借位时使用错了位数导致计算错误的问题 ([0591310](https://github.com/renzp94/number-correct/commit/0591310da56fec1201faea153782e5bf7e242a56))
+* 修复compared函数竖式比较的问题 ([0c219d5](https://github.com/renzp94/number-correct/commit/0c219d528a877bf8e4fd0bd02735341963bef72b))
+
+
+### 新功能
+
+* 添加除法 ([e8c9867](https://github.com/renzp94/number-correct/commit/e8c986778ee09da85cdbf1326de16e3410a9a504))
+
 ### [0.0.7](https://github.com/renzp94/number-correct/compare/v0.0.6...v0.0.7) (2023-10-17)
 
 
