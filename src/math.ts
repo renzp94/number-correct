@@ -1,4 +1,4 @@
-import { plus } from '.'
+import { isGreatEqual, isLess, minus, plus } from '.'
 import {
   createNumberArray,
   createVCalc,
@@ -156,4 +156,61 @@ export const vTimes = (currList: number[], nextList: number[]) => {
   // 剔除前面无用的0
   result = replaceInvalidZero(list.join(''))
   return result
+}
+
+const _divide = (divisor: string, dividend): [number, string] => {
+  // 商默认为0
+  let quotient = 0
+  // 差值默认为减数
+  let diffValue = divisor
+
+  do {
+    // 如果差值 < 被减数则停止记录并统计记录
+    if (isLess(diffValue, dividend)) {
+      // 得出商和差值
+      return [quotient, diffValue]
+    }
+    const __debug_diffValue = diffValue
+    // 否则进行减法计算
+    diffValue = minus(diffValue, dividend)
+    // 并记录+1
+    quotient++
+  } while (diffValue !== '0' || isGreatEqual(divisor, dividend))
+}
+
+export const vDivide = (
+  divisorValues: string[],
+  dividend: string,
+  precision: number,
+) => {
+  const divisorList = [...divisorValues]
+  // 取并从数组中移除 和除数相同位数的值，并作为默认差值
+  let divisor = divisorList.splice(0, dividend.length).join('')
+  const result = []
+
+  do {
+    const [quotient, diffV] = _divide(divisor, dividend)
+    divisor = diffV
+    result.push(quotient)
+    // 判断数组中是否还有值
+    if (divisorList.length > 0) {
+      // 有值则首位进行补位
+      divisor += divisorList.shift()
+      // 判断是否差值为0，不为0则需要再次计算
+    } else if (divisor !== '0') {
+      // 没有值则进行0补位
+      divisor += '0'
+      // 差值补位0时，如果没有小数点，则记录小数点
+      if (!result.includes('.')) {
+        result.push('.')
+      }
+    }
+
+    const [_, decimal] = result.join('').split('.')
+    if (decimal?.length === precision) {
+      break
+    }
+  } while (divisor !== '0')
+
+  return replaceInvalidZero(result.join(''))
 }

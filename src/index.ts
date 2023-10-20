@@ -1,10 +1,12 @@
 import { isGreatEqual } from './compared'
-import { vMinus, vPlus, vTimes } from './math'
+import { vDivide, vMinus, vPlus, vTimes } from './math'
 import {
   createNumberArray,
   getOnlyIntegerVData,
+  getRoundedValue,
   getSymbolNumbers,
   getVData,
+  getVDivideData,
   isNegativeNumber,
   joinNumber,
   plusNegativeNumber,
@@ -190,4 +192,71 @@ export const times = (...numbers: Array<string | number>) => {
   }
 
   return `${symbol}${result}`
+}
+
+interface DivideConfigs {
+  precision?: number
+  rounded?: boolean
+}
+
+export const divide = (
+  divisor: string | number,
+  numbers: Array<string | number>,
+  configs?: DivideConfigs,
+) => {
+  const { precision = 10, rounded = true } = configs ?? {}
+  // 0除以任何数都为0
+  if (Number(divisor) === 0) {
+    return '0'
+  }
+  // 先将被除数相乘
+  let dividend = times(...numbers)
+  if (dividend === '0') {
+    throw new Error('被除数不能为0')
+  }
+
+  const [divisorValues, divisorDecimalCount] = getVDivideData(divisor)
+  const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
+  dividend = dividendValues.join('')
+  // console.log(divisor, dividend, divisorDecimalCount, dividendDecimalCount)
+  let zeroCount = dividendDecimalCount - divisorDecimalCount
+  // 小数位数大于0，精度需要增加，用于后续移动小数点
+  let precisionValue = zeroCount > 0 ? precision + zeroCount : precision
+  if (rounded) {
+    precisionValue += 1
+  }
+  let quotient = vDivide(divisorValues, dividend, precisionValue)
+
+  // console.log('quotient', quotient, precision + zeroCount)
+
+  if (zeroCount > 0) {
+    if (quotient.includes('.')) {
+      const [integer, decimal] = quotient.split('.').map((v) => v.split(''))
+      const v = decimal.shift()
+      quotient = `${integer.join('')}${v}.${decimal.join('')}`
+    } else {
+      quotient = quotient.padEnd(zeroCount + quotient.length, '0')
+    }
+  }
+
+  if (zeroCount < 0) {
+    zeroCount = Math.abs(zeroCount)
+    const zeroList = createNumberArray(zeroCount).map(String)
+    zeroList.splice(1, 0, '.')
+    const decimalSuffix = zeroList.join('')
+    if (quotient.includes('.')) {
+      quotient = quotient
+        .split('')
+        .filter((v, index) => v !== '.' && index !== quotient.length - 1)
+        .join('')
+    }
+
+    quotient = `${decimalSuffix}${quotient}`
+  }
+
+  if (rounded) {
+    quotient = getRoundedValue(quotient, precision)
+  }
+
+  return quotient
 }

@@ -1,4 +1,4 @@
-import { plus } from '.'
+import { isGreatEqual, plus } from '.'
 import type { Operation } from './math'
 
 /**
@@ -301,4 +301,48 @@ export const plusNegativeNumber = (numbers: Array<string | number>) => {
   }
 
   return negativeNumber
+}
+/**
+ * 获取除法需要的数据
+ * @param number 数字字符串
+ * @returns 返回[数字数组,小数个数]
+ */
+export const getVDivideData = (number: string | number): [string[], number] => {
+  const value = replaceInvalidZero(removeMinusSign(number))
+  const decimalPointIndex = value.indexOf('.')
+  const decimalCount =
+    decimalPointIndex > -1 ? value.length - value.indexOf('.') - 1 : 0
+
+  const values = value.split('').filter((v) => v !== '.')
+
+  return [values, decimalCount]
+}
+/**
+ * 计算进位后的值
+ * @param number 数字字符串
+ * @returns 如果是整数则原样返回，否则返回最终进位后的值
+ */
+export const getRoundedValue = (number: string, precision: number) => {
+  // 如果是整数直接返回原数
+  if (!number.includes('.')) {
+    return number
+  }
+
+  let [integer, decimal] = number.split('.')
+  // 如果是未多于精度则直接返回原数
+  if (decimal.length <= precision) {
+    return number
+  }
+
+  const decimalList = decimal.split('')
+  const roundValue = decimalList.pop()
+  decimal = decimalList.join('')
+  let result = `${integer}.${decimal}`
+
+  if (isGreatEqual(roundValue, 5)) {
+    const zeroList = createNumberArray(decimal.length - 1)
+    result = plus(result, `0.${zeroList.join('')}1`)
+  }
+
+  return result
 }
