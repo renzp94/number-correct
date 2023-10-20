@@ -211,14 +211,13 @@ export const divide = (
   }
   // 先将被除数相乘
   let dividend = times(...numbers)
-  if (dividend === '0') {
+  if (Number(dividend) === 0) {
     throw new Error('被除数不能为0')
   }
 
   const [divisorValues, divisorDecimalCount] = getVDivideData(divisor)
   const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
   dividend = dividendValues.join('')
-  // console.log(divisor, dividend, divisorDecimalCount, dividendDecimalCount)
   let zeroCount = dividendDecimalCount - divisorDecimalCount
   // 小数位数大于0，精度需要增加，用于后续移动小数点
   let precisionValue = zeroCount > 0 ? precision + zeroCount : precision
@@ -226,8 +225,6 @@ export const divide = (
     precisionValue += 1
   }
   let quotient = vDivide(divisorValues, dividend, precisionValue)
-
-  // console.log('quotient', quotient, precision + zeroCount)
 
   if (zeroCount > 0) {
     if (quotient.includes('.')) {
