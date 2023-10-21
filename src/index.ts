@@ -14,6 +14,7 @@ import {
   removeMinusSign,
   replaceBeforeInvalidZero,
   replaceInvalidZero,
+  validator,
 } from './utils'
 
 export * from './compared'
@@ -24,6 +25,7 @@ export * from './compared'
  * @returns 相加结果的字符串
  */
 export const plus = (...numbers: Array<string | number>) => {
+  validator(numbers)
   const [positiveNumbers, negativeNumbers] = getSymbolNumbers(numbers)
   // 假设只有一个数
   let result: string = positiveNumbers?.[0]?.toString()
@@ -66,6 +68,7 @@ export const minus = (
   reduction: string | number,
   ...numbers: Array<string | number>
 ) => {
+  validator([reduction, ...numbers])
   let reductionValue = reduction
   const [positiveNumbers, negativeNumbers] = getSymbolNumbers(numbers)
   if (negativeNumbers.length) {
@@ -152,6 +155,7 @@ export const minus = (
  * @returns 相加结果的字符串
  */
 export const times = (...numbers: Array<string | number>) => {
+  validator(numbers)
   const hasZero = numbers.some((v) => Number(v) === 0)
   // 0乘任何数都为0
   if (hasZero) {
@@ -204,6 +208,7 @@ export const divide = (
   numbers: Array<string | number>,
   configs?: DivideConfigs,
 ) => {
+  validator([divisor, ...numbers])
   const { precision = 10, rounded = true } = configs ?? {}
   // 0除以任何数都为0
   if (Number(divisor) === 0) {

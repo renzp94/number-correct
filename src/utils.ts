@@ -346,3 +346,31 @@ export const getRoundedValue = (number: string, precision: number) => {
 
   return result
 }
+
+/**
+ * 验证是否为数字
+ * @param v 字符串
+ * @returns 为数字则返回true，否则返回false
+ */
+export const isNumber = (v: string | number) =>
+  /^-?\d+\.?\d*$/.test(v.toString())
+/**
+ * 数字有效验证器
+ * @param numbers 当前操作的数
+ * @returns 验证不通过则报错
+ */
+export const validator = (numbers: Array<string | number>) => {
+  let errorValue: string | number
+
+  const isError = numbers.some((v) => {
+    const pass = isNumber(v)
+    if (!pass) {
+      errorValue = v
+    }
+    return !pass
+  })
+
+  if (isError) {
+    throw new Error(`${errorValue}不是一个数字`)
+  }
+}

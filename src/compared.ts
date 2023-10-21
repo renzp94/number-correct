@@ -3,6 +3,7 @@ import {
   isNegativeNumber,
   removeMinusSign,
   replaceInvalidZero,
+  validator,
 } from './utils'
 
 type ComparedReturnValue = -1 | 0 | 1
@@ -36,6 +37,7 @@ export const compared = (
   compareValue: string | number,
   comparedValue: string | number,
 ): ComparedReturnValue => {
+  validator([compareValue, comparedValue])
   // 目标值是否为负数
   const isCNV = isNegativeNumber(compareValue)
   // 被比较值是否为负数
