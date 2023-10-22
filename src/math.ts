@@ -157,7 +157,12 @@ export const vTimes = (currList: number[], nextList: number[]) => {
   result = replaceInvalidZero(list.join(''))
   return result
 }
-
+/**
+ * 获取当前位的商和差值
+ * @param divisor 除数一部分
+ * @param dividend 被除数
+ * @returns 返回[商,差值]
+ */
 const _divide = (divisor: string, dividend): [number, string] => {
   // 商默认为0
   let quotient = 0
@@ -177,7 +182,13 @@ const _divide = (divisor: string, dividend): [number, string] => {
     quotient++
   } while (diffValue !== '0' || isGreatEqual(divisor, dividend))
 }
-
+/**
+ * 除法
+ * @param divisorValues 部分除数
+ * @param dividend 被除数
+ * @param precision 精度
+ * @returns 返回计算的商
+ */
 export const vDivide = (
   divisorValues: string[],
   dividend: string,
@@ -213,4 +224,32 @@ export const vDivide = (
   } while (divisor !== '0')
 
   return replaceInvalidZero(result.join(''))
+}
+/**
+ * 求余
+ * @param divisorValues 部分除数
+ * @param dividend 被求余数
+ * @returns 返回计算的余数
+ */
+export const vMod = (divisorValues: string[], dividend: string) => {
+  const divisorList = [...divisorValues]
+  // 取并从数组中移除 和被求余数相同位数的值，并作为默认差值
+  let divisor = divisorList.splice(0, dividend.length).join('')
+  let remainder = divisor
+
+  do {
+    const [_, diffV] = _divide(divisor, dividend)
+    divisor = diffV
+    // 判断数组中是否还有值
+    if (divisorList.length > 0) {
+      // 有值则首位进行补位
+      divisor += divisorList.shift()
+    } else {
+      // 没有值则说明差值就是余数
+      remainder = diffV
+      break
+    }
+  } while (divisorList.length >= 0)
+
+  return replaceInvalidZero(remainder)
 }

@@ -1,5 +1,5 @@
-import { isGreatEqual } from './compared'
-import { vDivide, vMinus, vPlus, vTimes } from './math'
+import { isGreatEqual, isLess } from './compared'
+import { vDivide, vMinus, vMod, vPlus, vTimes } from './math'
 import {
   createNumberArray,
   getOnlyIntegerVData,
@@ -261,4 +261,44 @@ export const divide = (
   }
 
   return quotient
+}
+
+export const mod = (divisor: string | number, dividend: string | number) => {
+  if (Number(dividend) === 0) {
+    throw new Error('被求余数不能为0')
+  }
+  // 如果余数小于被求余数则直接返回余数
+  if (isLess(divisor, dividend)) {
+    return divisor.toString()
+  }
+
+  let [divisorValues, divisorDecimalCount] = getVDivideData(divisor)
+  const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
+  const count = divisorDecimalCount - dividendDecimalCount
+  // 小数部分剩余的值
+  let decimalRemainder = ''
+
+  if (count > 0) {
+    // 因为小数不参与求余计算，所以找出余数和被求余数之间的小数位差，并取出小数位值，用于和计算的余数拼接
+    decimalRemainder = divisorValues
+      .slice(divisorValues.length - count)
+      .join('')
+    divisorValues = divisorValues.slice(0, divisorValues.length - count)
+  }
+
+  const dividendValue = dividendValues.join('')
+
+  let remainder = vMod(divisorValues, dividendValue)
+
+  if (remainder !== '0' && dividendDecimalCount > 0) {
+    const zeroList = createNumberArray(
+      dividendDecimalCount - remainder.length + 1,
+    ).map(String)
+    zeroList.splice(1, 0, '.')
+    remainder = `${zeroList.join('')}${remainder}`
+  }
+  // 拼接小数差位的值
+  remainder = `${remainder}${decimalRemainder}`
+
+  return remainder
 }

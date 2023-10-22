@@ -313,7 +313,8 @@ export const getVDivideData = (number: string | number): [string[], number] => {
   const decimalCount =
     decimalPointIndex > -1 ? value.length - value.indexOf('.') - 1 : 0
 
-  const values = value.split('').filter((v) => v !== '.')
+  let values = value.split('').filter((v) => v !== '.')
+  values = replaceInvalidZero(values.join('')).split('')
 
   return [values, decimalCount]
 }
