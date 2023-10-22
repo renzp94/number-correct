@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/renzp94/number-correct/compare/v0.0.8...v0.0.9) (2023-10-22)
+
+
+### Bug修复
+
+* 修复除法除数为0判断的问题 ([7fb8179](https://github.com/renzp94/number-correct/commit/7fb8179cc97e835a5f9c0fbfb8288e898b1e2122))
+
+
+### 其他
+
+* update README ([69d64f8](https://github.com/renzp94/number-correct/commit/69d64f8e5709e7ef28595024537ac8b1b531b57c))
+
+
+### 新功能
+
+* 添加求余功能 ([66c6091](https://github.com/renzp94/number-correct/commit/66c609172472b363e032fa89071a568a8ec360a9))
+* 添加数字验证器 ([8c6e7d7](https://github.com/renzp94/number-correct/commit/8c6e7d710b39c13d7daca4445406798142b39dcb))
+
 ### [0.0.8](https://github.com/renzp94/number-correct/compare/v0.0.7...v0.0.8) (2023-10-20)
 
 
