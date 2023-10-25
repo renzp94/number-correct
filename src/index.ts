@@ -316,7 +316,11 @@ export const mod = (divisor: string | number, dividend: string | number) => {
     remainder = `${zeroList.join('')}${remainder}`
   }
   // 拼接小数差位的值
-  remainder = `${remainder}${decimalRemainder}`
+  if (decimalRemainder) {
+    remainder = `${remainder}${
+      remainder.includes('.') ? '' : '.'
+    }${decimalRemainder}`
+  }
 
   return remainder
 }
