@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/renzp94/number-correct/compare/v0.0.9...v0.0.10) (2023-10-25)
+
+
+### 其他
+
+* update README ([7bebbb6](https://github.com/renzp94/number-correct/commit/7bebbb67866a86e87f4dfe27b5bc3642c88d209f))
+* update README ([4c28be4](https://github.com/renzp94/number-correct/commit/4c28be4a9d60b3ee65d7c993fc7d92fc2926965e))
+
+
+### 新功能
+
+* 兼容科学计数法 ([c74784b](https://github.com/renzp94/number-correct/commit/c74784b865ae3f143af457f228e96dc8c58f88ae))
+
+
+### Bug修复
+
+* 修复求余函数两数小数为不同时计算错误的问题 ([ea7e18a](https://github.com/renzp94/number-correct/commit/ea7e18a3c69ee647b5fca8fd7ab4eb30f47d2ebf))
+
 ### [0.0.9](https://github.com/renzp94/number-correct/compare/v0.0.8...v0.0.9) (2023-10-22)
 
 
