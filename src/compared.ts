@@ -3,6 +3,7 @@ import {
   isNegativeNumber,
   removeMinusSign,
   replaceInvalidZero,
+  transformScientificNotation,
   validator,
 } from './utils'
 
@@ -38,10 +39,13 @@ export const compared = (
   comparedValue: string | number,
 ): ComparedReturnValue => {
   validator([compareValue, comparedValue])
+  const tCompareValue = transformScientificNotation(compareValue)
+  const tComparedValue = transformScientificNotation(comparedValue)
+
   // 目标值是否为负数
-  const isCNV = isNegativeNumber(compareValue)
+  const isCNV = isNegativeNumber(tCompareValue)
   // 被比较值是否为负数
-  const isCedNV = isNegativeNumber(comparedValue)
+  const isCedNV = isNegativeNumber(tComparedValue)
   // 目标值为正，被比较值为负
   if (!isCNV && isCedNV) {
     return 1
@@ -50,8 +54,8 @@ export const compared = (
   if (isCNV && !isCedNV) {
     return -1
   }
-  let tValue = compareValue
-  let cValue = comparedValue
+  let tValue = tCompareValue
+  let cValue = tComparedValue
   // 全为负
   const isAllNV = isCNV && isCedNV
   if (isAllNV) {

@@ -14,6 +14,7 @@ import {
   removeMinusSign,
   replaceBeforeInvalidZero,
   replaceInvalidZero,
+  transformScientificNotation,
   validator,
 } from './utils'
 
@@ -25,8 +26,11 @@ export * from './compared'
  * @returns 相加结果的字符串
  */
 export const plus = (...numbers: Array<string | number>) => {
+  // 验证数字
   validator(numbers)
-  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(numbers)
+  // 处理科学计数法
+  const tNumbers = numbers.map(transformScientificNotation)
+  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(tNumbers)
   // 假设只有一个数
   let result: string = positiveNumbers?.[0]?.toString()
   // 如果有多个则进行多数加法
@@ -68,9 +72,14 @@ export const minus = (
   reduction: string | number,
   ...numbers: Array<string | number>
 ) => {
+  // 验证数字
   validator([reduction, ...numbers])
-  let reductionValue = reduction
-  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(numbers)
+  // 处理科学计数法
+  const tNumbers = numbers.map(transformScientificNotation)
+  const tReduction = transformScientificNotation(reduction)
+
+  let reductionValue = tReduction
+  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(tNumbers)
   if (negativeNumbers.length) {
     const negativeNumber = plusNegativeNumber(negativeNumbers)
     if (negativeNumber) {
@@ -155,17 +164,20 @@ export const minus = (
  * @returns 相加结果的字符串
  */
 export const times = (...numbers: Array<string | number>) => {
+  // 验证数字
   validator(numbers)
-  const hasZero = numbers.some((v) => Number(v) === 0)
+  // 处理科学计数法
+  const tNumbers = numbers.map(transformScientificNotation)
+  const hasZero = tNumbers.some((v) => Number(v) === 0)
   // 0乘任何数都为0
   if (hasZero) {
     return '0'
   }
   // 获取负数个数
-  const negativeNumberCount = numbers.filter(isNegativeNumber).length
+  const negativeNumberCount = tNumbers.filter(isNegativeNumber).length
   // 如果是双数的话则结果为正，否则为负
   const symbol = negativeNumberCount % 2 === 0 ? '' : '-'
-  let positiveNumbers = numbers.map(removeMinusSign)
+  let positiveNumbers = tNumbers.map(removeMinusSign)
   // 假设只有一个数
   let result: string = positiveNumbers?.[0]?.toString()
   // 如果有多个则进行多数加法
@@ -208,19 +220,23 @@ export const divide = (
   numbers: Array<string | number>,
   configs?: DivideConfigs,
 ) => {
+  // 验证数字
   validator([divisor, ...numbers])
+  // 处理科学计数法
+  const tNumbers = numbers.map(transformScientificNotation)
+  const tDivisor = transformScientificNotation(divisor)
   const { precision = 10, rounded = true } = configs ?? {}
   // 0除以任何数都为0
-  if (Number(divisor) === 0) {
+  if (Number(tDivisor) === 0) {
     return '0'
   }
   // 先将被除数相乘
-  let dividend = times(...numbers)
+  let dividend = times(...tNumbers)
   if (Number(dividend) === 0) {
     throw new Error('被除数不能为0')
   }
 
-  const [divisorValues, divisorDecimalCount] = getVDivideData(divisor)
+  const [divisorValues, divisorDecimalCount] = getVDivideData(tDivisor)
   const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
   dividend = dividendValues.join('')
   let zeroCount = dividendDecimalCount - divisorDecimalCount
@@ -264,16 +280,18 @@ export const divide = (
 }
 
 export const mod = (divisor: string | number, dividend: string | number) => {
-  if (Number(dividend) === 0) {
+  const tDivisor = transformScientificNotation(divisor)
+  const tDividend = transformScientificNotation(dividend)
+  if (Number(tDividend) === 0) {
     throw new Error('被求余数不能为0')
   }
   // 如果余数小于被求余数则直接返回余数
-  if (isLess(divisor, dividend)) {
-    return divisor.toString()
+  if (isLess(tDivisor, tDividend)) {
+    return tDivisor
   }
 
-  let [divisorValues, divisorDecimalCount] = getVDivideData(divisor)
-  const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
+  let [divisorValues, divisorDecimalCount] = getVDivideData(tDivisor)
+  const [dividendValues, dividendDecimalCount] = getVDivideData(tDividend)
   const count = divisorDecimalCount - dividendDecimalCount
   // 小数部分剩余的值
   let decimalRemainder = ''

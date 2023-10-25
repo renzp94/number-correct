@@ -354,7 +354,7 @@ export const getRoundedValue = (number: string, precision: number) => {
  * @returns 为数字则返回true，否则返回false
  */
 export const isNumber = (v: string | number) =>
-  /^-?\d+\.?\d*$/.test(v.toString())
+  /^[-]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?$/.test(v.toString())
 /**
  * 数字有效验证器
  * @param numbers 当前操作的数
@@ -374,4 +374,25 @@ export const validator = (numbers: Array<string | number>) => {
   if (isError) {
     throw new Error(`${errorValue}不是一个数字`)
   }
+}
+/**
+ * 将科学计数法转换为数字完成形式
+ * @param v 科学计数法表示的数字
+ * @returns 返回转换后的数字
+ */
+export const transformScientificNotation = (v: string | number) => {
+  let value = v.toString()
+  if (/[eE]/.test(value)) {
+    let [base, exponent] = value.split(/[eE]/)
+    base = base.replace(/\./g, '')
+
+    if (exponent.includes('+')) {
+      value = base.padEnd(base.length + Number(exponent), '0')
+    } else {
+      value = base.padStart(base.length + Math.abs(Number(exponent)), '0')
+      value = `${value.slice(0, 1)}.${value.slice(1, value.length)}`
+    }
+  }
+
+  return value
 }

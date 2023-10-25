@@ -95,10 +95,18 @@ test('8.023 > 1.1', () => {
   expect(isGreatEqual(8.023, 1.1)).toBe(true)
 })
 
-test('322 > 326', () => {
+test('322 < 326', () => {
   expect(isLess(322, 326)).toBe(true)
 })
 
 test('-3.02-3 > 0.3 error: -3.02-3不是一个数字', () => {
   expect(() => isLess('-3.02-3', 0.3)).toThrow('-3.02-3不是一个数字')
+})
+
+test('3.22e5 > 326e2', () => {
+  expect(isGreat(3.22e5, 326e2)).toBe(true)
+})
+
+test('3.22e-5 < 326e-2', () => {
+  expect(isLess(3.22e-5, 326e-2)).toBe(true)
 })
