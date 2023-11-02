@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/renzp94/number-correct/compare/v0.0.10...v0.0.11) (2023-11-02)
+
+
+### 其他
+
+* update README ([8e0f1ae](https://github.com/renzp94/number-correct/commit/8e0f1ae898d6ab31424cc678bafebc95d6b0d406))
+
+
+### 新功能
+
+* 添加toFixed方法 ([7ac632e](https://github.com/renzp94/number-correct/commit/7ac632e67b972d68d898019af9841cc59b3cb9a6))
+
 ### [0.0.10](https://github.com/renzp94/number-correct/compare/v0.0.9...v0.0.10) (2023-10-25)
 
 
