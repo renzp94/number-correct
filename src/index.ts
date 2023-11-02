@@ -324,3 +324,37 @@ export const mod = (divisor: string | number, dividend: string | number) => {
 
   return remainder
 }
+
+export const toFixed = (
+  number: string | number,
+  precision: number,
+  rounded = true,
+) => {
+  validator([number])
+  let value = transformScientificNotation(number)
+  let symbol = ''
+  if (isNegativeNumber(value)) {
+    value = removeMinusSign(value)
+    symbol = '-'
+  }
+
+  if (rounded) {
+    value = getRoundedValue(value, precision)
+  }
+
+  // 精度小于等于0则只保留整数
+  if (precision <= 0) {
+    value = value.split('.')[0]
+    return Number(value) === 0 ? value : `${symbol}${value}`
+  }
+
+  if (rounded) {
+    value = getRoundedValue(value, precision)
+  }
+
+  let [integer, decimal = ''] = value.split('.')
+  decimal = decimal.padEnd(precision, '0')
+  value = `${symbol}${integer}.${decimal}`
+
+  return value
+}

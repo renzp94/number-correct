@@ -335,10 +335,23 @@ export const getRoundedValue = (number: string, precision: number) => {
     return number
   }
 
+  // 默认精度为0只要整数
+  let result = integer
+  // 如果精度为0
+  if (precision <= 0) {
+    const roundValue = decimal.split('')[0] ?? 0
+    // 判断是否需要进位
+    if (isGreatEqual(roundValue, 5)) {
+      result = plus(result, 1)
+    }
+
+    return result
+  }
+  // 如果精度大于0则计算小数位
   const decimalList = decimal.split('')
   const roundValue = decimalList.pop()
   decimal = decimalList.join('')
-  let result = `${integer}.${decimal}`
+  result = `${integer}.${decimal}`
 
   if (isGreatEqual(roundValue, 5)) {
     const zeroList = createNumberArray(decimal.length - 1)
