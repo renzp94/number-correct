@@ -290,3 +290,15 @@ console.log(plus(1,2,3,'44444444444444.0000000000004444444444'));
 - [x] : `isEqual` - 等于(=)
 - [x] : `isGreatEqual` - 大于等于(>=)
 - [x] : `isLessEqual` - 小于等于(>=)
+
+### VNumber类
+
+竖式计算类，可以链式调用。
+
+```js
+import { VNumber } from '@renzp/number-correct'
+const vn = new VNumber(1)
+// ((1 + 1 - 2 + 2) * 3 + 2) / 2
+vn.plus(1).minus(2).plus(2).times(3).plus(2).divide(2)
+console.log(vn.value) // 4
+```
