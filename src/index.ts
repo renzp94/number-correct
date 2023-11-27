@@ -353,7 +353,11 @@ export const toFixed = (
   }
 
   let [integer, decimal = ''] = value.split('.')
-  decimal = decimal.padEnd(precision, '0')
+  if (decimal.length < precision) {
+    decimal = decimal.padEnd(precision, '0')
+  } else {
+    decimal = decimal.slice(0, precision)
+  }
   value = `${symbol}${integer}.${decimal}`
 
   return value

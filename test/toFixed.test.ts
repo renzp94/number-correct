@@ -44,3 +44,7 @@ test('toFixed(-0.123, 0) = 0', () => {
 test('toFixed(-0.789, 0) = -1', () => {
   expect(toFixed(-0.789, 0)).toBe('-1')
 })
+
+test('toFixed(5.333333, 2) = 5.33', () => {
+  expect(toFixed(5.333333, 2)).toBe('5.33')
+})
