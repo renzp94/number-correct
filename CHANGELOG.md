@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/renzp94/number-correct/compare/v0.0.11...v0.0.12) (2023-11-27)
+
+
+### 其他
+
+* update README ([0a0c045](https://github.com/renzp94/number-correct/commit/0a0c0457c981c37f5c2bc6b396629c26ef483299))
+* update README ([50ac4d3](https://github.com/renzp94/number-correct/commit/50ac4d3dacc387f29ce9104e033e4cfb8af9fba0))
+
+
+### Bug修复
+
+* 修复toFixed方法多位小数保留指定位数不对的问题 ([6263320](https://github.com/renzp94/number-correct/commit/62633202733e5b52a60b35b9dadb42d5f90d643b))
+
+
+### 新功能
+
+* 添加VNumber类实现链式调用 ([dd65be1](https://github.com/renzp94/number-correct/commit/dd65be1592510ffbf7d135f648e298cb41846975))
+
 ### [0.0.11](https://github.com/renzp94/number-correct/compare/v0.0.10...v0.0.11) (2023-11-02)
 
 
