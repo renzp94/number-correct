@@ -30,6 +30,10 @@ const _compared = (vTVNumbers: number[], vCVNumbers: number[]) => {
 }
 /**
  * 比大小
+ * @example
+ * compared(1, 2); // -1
+ * compared(1, 1); // 0
+ * compared(1, 0); // 1
  * @param compareValue 比较值
  * @param comparedValue 被比较值
  * @returns >: 返回1 =: 返回0 <: 返回-1
@@ -89,6 +93,10 @@ export const compared = (
 }
 /**
  * 是否大于
+ * @example
+ * isGreat(1, 2); // false
+ * isGreat(1, 1); // false
+ * isGreat(1, 0); // true
  * @param compareValue 比较值
  * @param comparedValue 被比较值
  * @returns 大于返回true，否则返回false
@@ -99,6 +107,10 @@ export const isGreat = (
 ) => compared(compareValue, comparedValue) === 1
 /**
  * 是否小于
+ * @example
+ * isLess(1, 2); // true
+ * isLess(1, 1); // false
+ * isLess(1, 0); // false
  * @param compareValue 比较值
  * @param comparedValue 被比较值
  * @returns 小于返回true，否则返回false
@@ -109,6 +121,10 @@ export const isLess = (
 ) => compared(compareValue, comparedValue) === -1
 /**
  * 是否等于
+ * @example
+ * isEqual(1, 2); // false
+ * isEqual(1, 1); // true
+ * isEqual(1, 0); // false
  * @param compareValue 比较值
  * @param comparedValue 被比较值
  * @returns 等于返回true，否则返回false
@@ -119,6 +135,10 @@ export const isEqual = (
 ) => compared(compareValue, comparedValue) === 0
 /**
  * 是否大于等于
+ * @example
+ * isGreatEqual(1, 2); // false
+ * isGreatEqual(1, 1); // true
+ * isGreatEqual(1, 0); // true
  * @param compareValue 比较值
  * @param comparedValue 被比较值
  * @returns 大于等于返回true，否则返回false
@@ -130,6 +150,10 @@ export const isGreatEqual = (
   isGreat(compareValue, comparedValue) || isEqual(compareValue, comparedValue)
 /**
  * 是否小于等于
+ * @example
+ * isLessEqual(1, 2); // true
+ * isLessEqual(1, 1); // true
+ * isLessEqual(1, 0); // false
  * @param compareValue 比较值
  * @param comparedValue 被比较值
  * @returns 小于等于返回true，否则返回false

@@ -20,8 +20,11 @@ import {
 
 export * from './compared'
 
+export { default as VNumber } from './object'
+
 /**
  * 加法
+ * @example plus(1, 1); // 2
  * @param numbers 要相加的数
  * @returns 相加结果的字符串
  */
@@ -64,6 +67,9 @@ export const plus = (...numbers: Array<string | number>) => {
 
 /**
  * 减法(首位作为减数，其余为被减数)
+ * @example
+ * minus(1, 1); // 0
+ * minus(2, 1, 1); // 0
  * @param reduction 减数
  * @param numbers 被减数数组
  * @returns 相减结果的字符串
@@ -160,8 +166,11 @@ export const minus = (
 
 /**
  * 乘法
+ * @example
+ * times(2, 2); // 4
+ * times(2, 2, 2); // 8
  * @param numbers 要相乘的数
- * @returns 相加结果的字符串
+ * @returns 相乘结果的字符串
  */
 export const times = (...numbers: Array<string | number>) => {
   // 验证数字
@@ -210,11 +219,26 @@ export const times = (...numbers: Array<string | number>) => {
   return `${symbol}${result}`
 }
 
-interface DivideConfigs {
+export interface DivideConfigs {
   precision?: number
   rounded?: boolean
 }
 
+/**
+ * 除法
+ * @example
+ * divide(4, [2]); // 2
+ * divide(8, [2, 2]); // 2
+ * // 可通过precision控制精度，0表示只要整数
+ * divide(10, [3], { precision: 0 }); // 3
+ * divide(10, [3], { precision: 2 }); // 3.33
+ * // 可通过rounded控制是否四舍五入，默认为true
+ * divide(20, [3], { precision: 0 }); // 7
+ * divide(20, [3], { precision: 2, rounded: false }); // 6.66
+ * @param numbers 被相除数的数组
+ * @param configs 除法配置，默认为{ precision = 10, rounded = true }
+ * @returns 相除结果的字符串
+ */
 export const divide = (
   divisor: string | number,
   numbers: Array<string | number>,
@@ -279,6 +303,13 @@ export const divide = (
   return quotient
 }
 
+/**
+ * 求余
+ * @example mod(5, 3); // 1
+ * @param divisor 求余数
+ * @param dividend 被求余数
+ * @returns 余数的字符串
+ */
 export const mod = (divisor: string | number, dividend: string | number) => {
   const tDivisor = transformScientificNotation(divisor)
   const tDividend = transformScientificNotation(dividend)
@@ -325,6 +356,18 @@ export const mod = (divisor: string | number, dividend: string | number) => {
   return remainder
 }
 
+/**
+ * 保留小数位
+ * @example
+ * toFixed(5.33333333, 0); // 5
+ * toFixed(5.33333333, 2); // 5.33
+ * toFixed(5.66666666, 2); // 5.67
+ * toFixed(5.66666666, 2, false); // 5.66
+ * @param number 要处理的数
+ * @param precision 保留位数，0为只保留整数
+ * @param rounded 是否四舍五入，默认为true
+ * @returns 保留指定小数位的字符串
+ */
 export const toFixed = (
   number: string | number,
   precision: number,
