@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/renzp94/number-correct/compare/v0.0.12...v0.0.13) (2023-12-14)
+
+
+### 其他
+
+* 调整打包的target为es2015 ([f29cda9](https://github.com/renzp94/number-correct/commit/f29cda950e3b77ac2a2df8a1faa5e5190a563739))
+* update README ([5bda3fb](https://github.com/renzp94/number-correct/commit/5bda3fb05a35574221beeca2c4a477ab8c3eb2a5))
+
 ### [0.0.12](https://github.com/renzp94/number-correct/compare/v0.0.11...v0.0.12) (2023-11-27)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@renzp/number-correct",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "基于竖式计算方式矫正js数字计算精度",
   "author": "renzp <1074720760.qq.com>",
   "repository": {
