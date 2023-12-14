@@ -7,5 +7,6 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   minify: true,
-  dts: './src/index.ts',
+  target: 'es2015',
+  dts: 'src/index.ts',
 })
