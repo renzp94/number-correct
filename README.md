@@ -1,3 +1,11 @@
+<p align="center"><a href="https://github.com/renzp94/number-correct" target="_blank" rel="noopener noreferrer"><img width="200" src="./logo.png" alt="Vue logo"></a></p>
+<p align="center">
+  <a href="https://codecov.io/github/@renzp/number-correct"><img src="https://img.shields.io/codecov/c/github/@renzp/number-correct.svg?sanitize=true" alt="Coverage Status"></a>
+  <a href="https://npmcharts.com/compare/@renzp/number-correct?minimal=true"><img src="https://img.shields.io/npm/dm/@renzp/number-correct.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/v/@renzp/number-correct.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/l/@renzp/number-correct.svg?sanitize=true" alt="License"></a>
+</p>
+
 # number-correct
 
 基于竖式计算方式矫正js数字计算精度
