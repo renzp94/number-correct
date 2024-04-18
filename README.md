@@ -1,6 +1,9 @@
 <p align="center"><a href="https://github.com/renzp94/number-correct" target="_blank" rel="noopener noreferrer"><img width="200" src="./logo.png" alt="number-correct logo"></a></p>
 <p align="center">
   <a href="https://codecov.io/github/@renzp/number-correct"><img src="https://img.shields.io/codecov/c/github/@renzp/number-correct.svg?sanitize=true" alt="Coverage Status"></a>
+    <a href="https://bundlephobia.com/package/@renzp/number-correct">
+    <img src="https://img.shields.io/bundlephobia/minzip/@renzp/number-correct?label=minzipped" alt="Bundle Size">
+  </a>
   <a href="https://npmcharts.com/compare/@renzp/number-correct?minimal=true"><img src="https://img.shields.io/npm/dm/@renzp/number-correct.svg?sanitize=true" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/v/@renzp/number-correct.svg?sanitize=true" alt="Version"></a>
   <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/l/@renzp/number-correct.svg?sanitize=true" alt="License"></a>
@@ -9,6 +12,54 @@
 # number-correct
 
 基于竖式计算方式矫正js数字计算精度
+
+## 安装
+
+```sh
+npm install @renzp/number-correct
+```
+
+## 使用
+
+```ts
+import { plus } from '@renzp/number-correct'
+
+console.log(plus(1,2,3,'44444444444444.0000000000004444444444'));
+```
+<a href="https://www.jsdocs.io/package/@renzp/number-correct"><img src="https://img.shields.io/badge/JSDoc-使用文档-blue" alt="docs" height="28"></a>
+
+## 功能列表
+
+### 算术
+
+- [x] : `plus` - 加法(+)
+- [x] : `minus` - 减法(-)
+- [x] : `times` - 乘法(*)
+- [x] : `divide` - 除法(/)
+- [x] : `mod` - 取余(%)
+- [x] : `toFixed` - 保留多少位小数(默认四舍五入)
+
+### 比较
+
+- [x] : `compared` - 通用比较方法
+- [x] : `isGreat` - 大于(>)
+- [x] : `isLess` - 小于(<)
+- [x] : `isEqual` - 等于(=)
+- [x] : `isGreatEqual` - 大于等于(>=)
+- [x] : `isLessEqual` - 小于等于(>=)
+
+### VNumber类
+
+竖式计算类，可以链式调用。
+
+```js
+import { VNumber } from '@renzp/number-correct'
+const vn = new VNumber(1)
+// ((1 + 1 - 2 + 2) * 3 + 2) / 2
+vn.plus(1).minus(2).plus(2).times(3).plus(2).divide(2)
+console.log(vn.value) // 4
+```
+
 
 ## 什么是竖式计算
 
@@ -264,49 +315,3 @@ a = [8 4 5]
 ```
 
 > 此计算方法不管多大的数据都不会出现精度丢失问题，同时可以直接计算字符串，返回数据是字符串。
-
-## 安装
-
-```sh
-npm install @renzp/number-correct
-```
-
-## 使用
-
-```ts
-import { plus } from '@renzp/number-correct'
-
-console.log(plus(1,2,3,'44444444444444.0000000000004444444444'));
-```
-
-## 功能列表
-
-### 算术
-
-- [x] : `plus` - 加法(+)
-- [x] : `minus` - 减法(-)
-- [x] : `times` - 乘法(*)
-- [x] : `divide` - 除法(/)
-- [x] : `mod` - 取余(%)
-- [x] : `toFixed` - 保留多少位小数(默认四舍五入)
-
-### 比较
-
-- [x] : `compared` - 通用比较方法
-- [x] : `isGreat` - 大于(>)
-- [x] : `isLess` - 小于(<)
-- [x] : `isEqual` - 等于(=)
-- [x] : `isGreatEqual` - 大于等于(>=)
-- [x] : `isLessEqual` - 小于等于(>=)
-
-### VNumber类
-
-竖式计算类，可以链式调用。
-
-```js
-import { VNumber } from '@renzp/number-correct'
-const vn = new VNumber(1)
-// ((1 + 1 - 2 + 2) * 3 + 2) / 2
-vn.plus(1).minus(2).plus(2).times(3).plus(2).divide(2)
-console.log(vn.value) // 4
-```
