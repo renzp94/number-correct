@@ -17,6 +17,10 @@ console.log(a.divide(3).value); // 7
 
 ## 构造函数
 
+```ts
+constructor(value: Value, configs?: VNumberConfigs)
+```
+
 | 参数    | 说明       | 类型             | 默认值 | 是否必填 |
 | ------- | ---------- | ---------------- | ------ | -------- |
 | value   | 要使用的数 | `Value`          | -      | 是       |
@@ -36,9 +40,13 @@ type Value = string | number
 
 ## 属性
 
-| 参数         | 说明     | 类型                                                |
-| ------------ | -------- | --------------------------------------------------- |
-| value        | 计算结果 | `Value`                                             |
+| 属性  | 说明     | 类型    |
+| ----- | -------- | ------- |
+| value | 计算结果 | `Value` |
+
+## 方法
+
+| 方法         | 说明     | 类型                                                |
 | setConfigs   | 设置配置 | `(config: VNumberConfigs) => VNumber`               |
 | plus         | 加法     | `(...values: Array<Value \| VNumber>) => VNumber`   |
 | minus        | 减法     | `(...values: Array<Value \| VNumber>) => VNumber`   |
