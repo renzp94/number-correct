@@ -1,10 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.1.2/schema.json",
+  "files": {
+    "ignore": ["dist"]
+  },
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "organizeImports": {
     "enabled": true
   },
   "linter": {
-    "ignore": ["dist"],
     "enabled": true,
     "rules": {
       "recommended": true,
@@ -32,7 +34,6 @@
     "formatWithErrors": false,
     "indentStyle": "space",
     "indentSize": 2,
-    "lineWidth": 80,
-    "ignore": ["dist"]
+    "lineWidth": 80
   }
 }

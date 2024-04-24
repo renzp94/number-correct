@@ -13,7 +13,8 @@
     "bun-types": "^1.0.6",
     "standard-version": "^9.5.0",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitepress": "^1.1.3"
   },
   "bugs": {
     "url": "https://github.com/renzp94/number-correct/issues"
@@ -35,7 +36,10 @@
   },
   "scripts": {
     "build": "tsup",
-    "pub": "npm run build && standard-version && npm publish"
+    "pub": "npm run build && standard-version && npm publish",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "type": "module"
 }
