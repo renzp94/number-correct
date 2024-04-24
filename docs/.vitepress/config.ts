@@ -4,7 +4,6 @@ import pkg from '../../package.json'
 export default defineConfig({
   title: 'number-correct',
   description: '一款零依赖、基于竖式计算方式矫正js数字计算精度的库',
-  cleanUrls: true,
   lastUpdated: true,
   metaChunk: true,
   rewrites: {
