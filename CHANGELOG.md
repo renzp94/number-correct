@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.14](https://github.com/renzp94/number-correct/compare/v0.0.13...v0.0.14) (2024-04-24)
+
+
+### 文档
+
+* 添加文档 ([197e394](https://github.com/renzp94/number-correct/commit/197e394aa9fecdccff66fc9eff2e4284678b45a0))
+
+
+### 其他
+
+* 调整JSDoc和代码排序 ([6e5fc10](https://github.com/renzp94/number-correct/commit/6e5fc10e6f3e0e52e70ef4a0ec123fcd09523348))
+* 更新README ([aae0824](https://github.com/renzp94/number-correct/commit/aae0824fc577591a5a8d711ce5c68d2ea6f314f1))
+* 更新README ([29411e9](https://github.com/renzp94/number-correct/commit/29411e9f7e2d4a1c776ef0ede45e3b5456c80755))
+* 更新README ([b9ca109](https://github.com/renzp94/number-correct/commit/b9ca1097e16a9f113c6cba2759a603d8311fee49))
+* update README ([d768644](https://github.com/renzp94/number-correct/commit/d76864403de54d6632ade2799d57dc453a465560))
+
 ### [0.0.13](https://github.com/renzp94/number-correct/compare/v0.0.12...v0.0.13) (2023-12-14)
 
 
