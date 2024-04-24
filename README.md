@@ -1,12 +1,14 @@
 <p align="center"><a href="https://github.com/renzp94/number-correct" target="_blank" rel="noopener noreferrer"><img width="200" src="./logo.png" alt="number-correct logo"></a></p>
 <p align="center">
-  <a href="https://codecov.io/github/@renzp/number-correct"><img src="https://img.shields.io/codecov/c/github/@renzp/number-correct.svg?sanitize=true" alt="Coverage Status"></a>
+  <!-- <a href="https://codecov.io/github/@renzp/number-correct"><img src="https://img.shields.io/codecov/c/github/@renzp/number-correct.svg?sanitize=true" alt="Coverage Status"></a> -->
     <a href="https://bundlephobia.com/package/@renzp/number-correct">
     <img src="https://img.shields.io/bundlephobia/minzip/@renzp/number-correct?label=minzipped" alt="Bundle Size">
   </a>
   <a href="https://npmcharts.com/compare/@renzp/number-correct?minimal=true"><img src="https://img.shields.io/npm/dm/@renzp/number-correct.svg?sanitize=true" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/v/@renzp/number-correct.svg?sanitize=true" alt="Version"></a>
   <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/l/@renzp/number-correct.svg?sanitize=true" alt="License"></a>
+  <a href="https://www.jsdocs.io/package/@renzp/number-correct"><img src="https://img.shields.io/badge/JSDoc-blue" alt="docs"></a>
+    <a href="https://github.com/renzp94/number-correct/blob/main/CHANGELOG.md"><img src="https://img.shields.io/badge/更新日志-gray" alt="Change Log"></a>
 </p>
 
 # number-correct
@@ -26,40 +28,7 @@ import { plus } from '@renzp/number-correct'
 
 console.log(plus(1,2,3,'44444444444444.0000000000004444444444'));
 ```
-<a href="https://www.jsdocs.io/package/@renzp/number-correct"><img src="https://img.shields.io/badge/JSDoc-使用文档-blue" alt="docs" height="28"></a>
-
-## 功能列表
-
-### 算术
-
-- [x] : `plus` - 加法(+)
-- [x] : `minus` - 减法(-)
-- [x] : `times` - 乘法(*)
-- [x] : `divide` - 除法(/)
-- [x] : `mod` - 取余(%)
-- [x] : `toFixed` - 保留多少位小数(默认四舍五入)
-
-### 比较
-
-- [x] : `compared` - 通用比较方法
-- [x] : `isGreat` - 大于(>)
-- [x] : `isLess` - 小于(<)
-- [x] : `isEqual` - 等于(=)
-- [x] : `isGreatEqual` - 大于等于(>=)
-- [x] : `isLessEqual` - 小于等于(>=)
-
-### VNumber类
-
-竖式计算类，可以链式调用。
-
-```js
-import { VNumber } from '@renzp/number-correct'
-const vn = new VNumber(1)
-// ((1 + 1 - 2 + 2) * 3 + 2) / 2
-vn.plus(1).minus(2).plus(2).times(3).plus(2).divide(2)
-console.log(vn.value) // 4
-```
-
+更多使用方法可以查看[文档](https://number-correct.deno.dev)
 
 ## 什么是竖式计算
 
