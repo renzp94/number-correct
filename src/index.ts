@@ -1,5 +1,6 @@
 import { isGreatEqual, isLess } from './compared'
 import { vDivide, vMinus, vMod, vPlus, vTimes } from './math'
+import { Value } from './object'
 import {
   createNumberArray,
   getOnlyIntegerVData,
@@ -22,62 +23,104 @@ export * from './compared'
 
 export { default as VNumber } from './object'
 
+export interface DivideConfigs {
+  precision?: number
+  rounded?: boolean
+}
 /**
- * 加法
- * @example plus(1, 1); // 2
- * @param numbers 要相加的数
- * @returns 相加结果的字符串
+ * 除法
+ *
+ * @param divisor 除数
+ * @param numbers 被相除数的数组
+ * @param configs 除法配置，默认为{ precision = 10, rounded = true }
+ * @returns 相除结果的字符串
+ *
+ * @example
+ * divide(4, [2]); // 2
+ * divide(8, [2, 2]); // 2
+ * // 可通过precision控制精度，0表示只要整数
+ * divide(10, [3], { precision: 0 }); // 3
+ * divide(10, [3], { precision: 2 }); // 3.33
+ * // 可通过rounded控制是否四舍五入，默认为true
+ * divide(20, [3], { precision: 0 }); // 7
+ * divide(20, [3], { precision: 2, rounded: false }); // 6.66
  */
-export const plus = (...numbers: Array<string | number>) => {
+export const divide = (
+  divisor: Value,
+  numbers: Array<Value>,
+  configs?: DivideConfigs,
+) => {
   // 验证数字
-  validator(numbers)
+  validator([divisor, ...numbers])
   // 处理科学计数法
   const tNumbers = numbers.map(transformScientificNotation)
-  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(tNumbers)
-  // 假设只有一个数
-  let result: string = positiveNumbers?.[0]?.toString()
-  // 如果有多个则进行多数加法
-  if (positiveNumbers.length > 1) {
-    const [vInteger, vDecimal] = getVData(positiveNumbers)
-    // 先算小数，因为有可能需要进位
-    let decimal: number[] = []
-    // 需要进位的数，一般只有0(无进位)和1(有进位)
-    let upInteger = 0
-    if (vDecimal.maxLen) {
-      decimal = reduceVData(vDecimal, vPlus)
-      // 如果有进位则将进位从小数数组中移除并赋给进位变量
-      if (decimal.length > vDecimal.maxLen) {
-        upInteger = decimal.pop() as number
-      }
-    }
-    vInteger.defaultData = [upInteger, ...vInteger.defaultData]
-    const integer = reduceVData(vInteger, vPlus)
-    result = joinNumber(integer, decimal)
+  const tDivisor = transformScientificNotation(divisor)
+  const { precision = 10, rounded = true } = configs ?? {}
+  // 0除以任何数都为0
+  if (Number(tDivisor) === 0) {
+    return '0'
+  }
+  // 先将被除数相乘
+  let dividend = times(...tNumbers)
+  if (Number(dividend) === 0) {
+    throw new Error('被除数不能为0')
   }
 
-  if (negativeNumbers.length) {
-    const negativeNumber = plusNegativeNumber(negativeNumbers)
-    if (negativeNumber) {
-      result = result ? minus(result, negativeNumber) : `-${negativeNumber}`
+  const [divisorValues, divisorDecimalCount] = getVDivideData(tDivisor)
+  const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
+  dividend = dividendValues.join('')
+  let zeroCount = dividendDecimalCount - divisorDecimalCount
+  // 小数位数大于0，精度需要增加，用于后续移动小数点
+  let precisionValue = zeroCount > 0 ? precision + zeroCount : precision
+  if (rounded) {
+    precisionValue += 1
+  }
+  let quotient = vDivide(divisorValues, dividend, precisionValue)
+
+  if (zeroCount > 0) {
+    if (quotient.includes('.')) {
+      const [integer, decimal] = quotient.split('.').map((v) => v.split(''))
+      const v = decimal.shift()
+      quotient = `${integer.join('')}${v}.${decimal.join('')}`
+    } else {
+      quotient = quotient.padEnd(zeroCount + quotient.length, '0')
     }
   }
 
-  return result
+  if (zeroCount < 0) {
+    zeroCount = Math.abs(zeroCount)
+    const zeroList = createNumberArray(zeroCount).map(String)
+    zeroList.splice(1, 0, '.')
+    const decimalSuffix = zeroList.join('')
+    if (quotient.includes('.')) {
+      quotient = quotient
+        .split('')
+        .filter((v, index) => v !== '.' && index !== quotient.length - 1)
+        .join('')
+    }
+
+    quotient = `${decimalSuffix}${quotient}`
+  }
+
+  if (rounded) {
+    quotient = getRoundedValue(quotient, precision)
+  }
+
+  return quotient
 }
 
 /**
  * 减法(首位作为减数，其余为被减数)
- * @example
- * minus(1, 1); // 0
- * minus(2, 1, 1); // 0
+ *
  * @param reduction 减数
  * @param numbers 被减数数组
  * @returns 相减结果的字符串
+ *
+ * @example
+ * minus(1, 1); // 0
+ * minus(2, 1, 1); // 0
  */
-export const minus = (
-  reduction: string | number,
-  ...numbers: Array<string | number>
-) => {
+export const minus = (reduction: Value, ...numbers: Array<Value>) => {
   // 验证数字
   validator([reduction, ...numbers])
   // 处理科学计数法
@@ -165,152 +208,16 @@ export const minus = (
 }
 
 /**
- * 乘法
- * @example
- * times(2, 2); // 4
- * times(2, 2, 2); // 8
- * @param numbers 要相乘的数
- * @returns 相乘结果的字符串
- */
-export const times = (...numbers: Array<string | number>) => {
-  // 验证数字
-  validator(numbers)
-  // 处理科学计数法
-  const tNumbers = numbers.map(transformScientificNotation)
-  const hasZero = tNumbers.some((v) => Number(v) === 0)
-  // 0乘任何数都为0
-  if (hasZero) {
-    return '0'
-  }
-  // 获取负数个数
-  const negativeNumberCount = tNumbers.filter(isNegativeNumber).length
-  // 如果是双数的话则结果为正，否则为负
-  const symbol = negativeNumberCount % 2 === 0 ? '' : '-'
-  let positiveNumbers = tNumbers.map(removeMinusSign)
-  // 假设只有一个数
-  let result: string = positiveNumbers?.[0]?.toString()
-  // 如果有多个则进行多数加法
-  if (positiveNumbers.length > 1) {
-    // 算出小数位的长度
-    const decimalPoint = positiveNumbers.reduce((prev, curr) => {
-      const [_, decimal] = curr.split('.')
-      return prev + (decimal?.length ?? 0)
-    }, 0)
-    // 将小数全部转化为整数
-    positiveNumbers = positiveNumbers.map((item) => item.replace('.', ''))
-    const vInteger = getOnlyIntegerVData(positiveNumbers)
-    // 过滤掉整数数组中全部为0数组
-    vInteger.data = vInteger.data.filter((item) => !item.every((v) => v === 0))
-    vInteger.defaultData = vInteger.data.shift() ?? []
-
-    // 算出整数
-    const integer: Array<number | string> = reduceVData(
-      vInteger,
-      vTimes,
-    ).reverse()
-    if (decimalPoint > 0) {
-      const zeroList = createNumberArray(decimalPoint)
-      integer.unshift(...zeroList)
-      integer.splice(integer.length - decimalPoint, 0, '.')
-    }
-    result = replaceInvalidZero(integer.join(''))
-  }
-
-  return `${symbol}${result}`
-}
-
-export interface DivideConfigs {
-  precision?: number
-  rounded?: boolean
-}
-
-/**
- * 除法
- * @example
- * divide(4, [2]); // 2
- * divide(8, [2, 2]); // 2
- * // 可通过precision控制精度，0表示只要整数
- * divide(10, [3], { precision: 0 }); // 3
- * divide(10, [3], { precision: 2 }); // 3.33
- * // 可通过rounded控制是否四舍五入，默认为true
- * divide(20, [3], { precision: 0 }); // 7
- * divide(20, [3], { precision: 2, rounded: false }); // 6.66
- * @param numbers 被相除数的数组
- * @param configs 除法配置，默认为{ precision = 10, rounded = true }
- * @returns 相除结果的字符串
- */
-export const divide = (
-  divisor: string | number,
-  numbers: Array<string | number>,
-  configs?: DivideConfigs,
-) => {
-  // 验证数字
-  validator([divisor, ...numbers])
-  // 处理科学计数法
-  const tNumbers = numbers.map(transformScientificNotation)
-  const tDivisor = transformScientificNotation(divisor)
-  const { precision = 10, rounded = true } = configs ?? {}
-  // 0除以任何数都为0
-  if (Number(tDivisor) === 0) {
-    return '0'
-  }
-  // 先将被除数相乘
-  let dividend = times(...tNumbers)
-  if (Number(dividend) === 0) {
-    throw new Error('被除数不能为0')
-  }
-
-  const [divisorValues, divisorDecimalCount] = getVDivideData(tDivisor)
-  const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
-  dividend = dividendValues.join('')
-  let zeroCount = dividendDecimalCount - divisorDecimalCount
-  // 小数位数大于0，精度需要增加，用于后续移动小数点
-  let precisionValue = zeroCount > 0 ? precision + zeroCount : precision
-  if (rounded) {
-    precisionValue += 1
-  }
-  let quotient = vDivide(divisorValues, dividend, precisionValue)
-
-  if (zeroCount > 0) {
-    if (quotient.includes('.')) {
-      const [integer, decimal] = quotient.split('.').map((v) => v.split(''))
-      const v = decimal.shift()
-      quotient = `${integer.join('')}${v}.${decimal.join('')}`
-    } else {
-      quotient = quotient.padEnd(zeroCount + quotient.length, '0')
-    }
-  }
-
-  if (zeroCount < 0) {
-    zeroCount = Math.abs(zeroCount)
-    const zeroList = createNumberArray(zeroCount).map(String)
-    zeroList.splice(1, 0, '.')
-    const decimalSuffix = zeroList.join('')
-    if (quotient.includes('.')) {
-      quotient = quotient
-        .split('')
-        .filter((v, index) => v !== '.' && index !== quotient.length - 1)
-        .join('')
-    }
-
-    quotient = `${decimalSuffix}${quotient}`
-  }
-
-  if (rounded) {
-    quotient = getRoundedValue(quotient, precision)
-  }
-
-  return quotient
-}
-
-/**
  * 求余
- * @example mod(5, 3); // 1
+ *
  * @param divisor 求余数
  * @param dividend 被求余数
  * @returns 余数的字符串
+ *
+ * @example
+ * mod(5, 3); // 1
  */
-export const mod = (divisor: string | number, dividend: string | number) => {
+export const mod = (divisor: Value, dividend: Value) => {
   const tDivisor = transformScientificNotation(divisor)
   const tDividend = transformScientificNotation(dividend)
   if (Number(tDividend) === 0) {
@@ -357,22 +264,122 @@ export const mod = (divisor: string | number, dividend: string | number) => {
 }
 
 /**
+ * 加法
+ * @param numbers 要相加的数
+ * @returns 相加结果的字符串
+ *
+ * @example
+ * plus(1, 1); // 2
+ */
+export const plus = (...numbers: Array<Value>) => {
+  // 验证数字
+  validator(numbers)
+  // 处理科学计数法
+  const tNumbers = numbers.map(transformScientificNotation)
+  const [positiveNumbers, negativeNumbers] = getSymbolNumbers(tNumbers)
+  // 假设只有一个数
+  let result: string = positiveNumbers?.[0]?.toString()
+  // 如果有多个则进行多数加法
+  if (positiveNumbers.length > 1) {
+    const [vInteger, vDecimal] = getVData(positiveNumbers)
+    // 先算小数，因为有可能需要进位
+    let decimal: number[] = []
+    // 需要进位的数，一般只有0(无进位)和1(有进位)
+    let upInteger = 0
+    if (vDecimal.maxLen) {
+      decimal = reduceVData(vDecimal, vPlus)
+      // 如果有进位则将进位从小数数组中移除并赋给进位变量
+      if (decimal.length > vDecimal.maxLen) {
+        upInteger = decimal.pop() as number
+      }
+    }
+    vInteger.defaultData = [upInteger, ...vInteger.defaultData]
+    const integer = reduceVData(vInteger, vPlus)
+    result = joinNumber(integer, decimal)
+  }
+
+  if (negativeNumbers.length) {
+    const negativeNumber = plusNegativeNumber(negativeNumbers)
+    if (negativeNumber) {
+      result = result ? minus(result, negativeNumber) : `-${negativeNumber}`
+    }
+  }
+
+  return result
+}
+
+/**
+ * 乘法
+ *
+ * @param numbers 要相乘的数
+ * @returns 相乘结果的字符串
+ *
+ * @example
+ * times(2, 2); // 4
+ * times(2, 2, 2); // 8
+ */
+export const times = (...numbers: Array<Value>) => {
+  // 验证数字
+  validator(numbers)
+  // 处理科学计数法
+  const tNumbers = numbers.map(transformScientificNotation)
+  const hasZero = tNumbers.some((v) => Number(v) === 0)
+  // 0乘任何数都为0
+  if (hasZero) {
+    return '0'
+  }
+  // 获取负数个数
+  const negativeNumberCount = tNumbers.filter(isNegativeNumber).length
+  // 如果是双数的话则结果为正，否则为负
+  const symbol = negativeNumberCount % 2 === 0 ? '' : '-'
+  let positiveNumbers = tNumbers.map(removeMinusSign)
+  // 假设只有一个数
+  let result: string = positiveNumbers?.[0]?.toString()
+  // 如果有多个则进行多数加法
+  if (positiveNumbers.length > 1) {
+    // 算出小数位的长度
+    const decimalPoint = positiveNumbers.reduce((prev, curr) => {
+      const [_, decimal] = curr.split('.')
+      return prev + (decimal?.length ?? 0)
+    }, 0)
+    // 将小数全部转化为整数
+    positiveNumbers = positiveNumbers.map((item) => item.replace('.', ''))
+    const vInteger = getOnlyIntegerVData(positiveNumbers)
+    // 过滤掉整数数组中全部为0数组
+    vInteger.data = vInteger.data.filter((item) => !item.every((v) => v === 0))
+    vInteger.defaultData = vInteger.data.shift() ?? []
+
+    // 算出整数
+    const integer: Array<number | string> = reduceVData(
+      vInteger,
+      vTimes,
+    ).reverse()
+    if (decimalPoint > 0) {
+      const zeroList = createNumberArray(decimalPoint)
+      integer.unshift(...zeroList)
+      integer.splice(integer.length - decimalPoint, 0, '.')
+    }
+    result = replaceInvalidZero(integer.join(''))
+  }
+
+  return `${symbol}${result}`
+}
+
+/**
  * 保留小数位
+ *
+ * @param number 要处理的数
+ * @param precision 保留位数，0为只保留整数
+ * @param rounded 是否四舍五入，默认为true
+ * @returns 保留指定小数位的字符串
+ *
  * @example
  * toFixed(5.33333333, 0); // 5
  * toFixed(5.33333333, 2); // 5.33
  * toFixed(5.66666666, 2); // 5.67
  * toFixed(5.66666666, 2, false); // 5.66
- * @param number 要处理的数
- * @param precision 保留位数，0为只保留整数
- * @param rounded 是否四舍五入，默认为true
- * @returns 保留指定小数位的字符串
  */
-export const toFixed = (
-  number: string | number,
-  precision: number,
-  rounded = true,
-) => {
+export const toFixed = (number: Value, precision: number, rounded = true) => {
   validator([number])
   let value = transformScientificNotation(number)
   let symbol = ''

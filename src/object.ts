@@ -38,11 +38,13 @@ class VNumber {
   #divideConfigs?: DivideConfigs
   /**
    * 创建VNumber实例
+   *
+   * @param value 实例化时的值
+   * @param configs 竖式计算对象配置
+   *
    * @example
    * const vn = new VNumber(1);
    * const vNumber = new VNumber(1, { divideConfigs: { precision: 0 } });
-   * @param value 实例化时的值
-   * @param configs 竖式计算对象配置
    */
   constructor(value: Value, configs?: VNumberConfigs) {
     this.#value = value
@@ -50,6 +52,7 @@ class VNumber {
   }
   /**
    * 对象的值
+   *
    * @example
    * const vn = new VNumber(1);
    * console.log(vn.value); // 1
@@ -59,11 +62,12 @@ class VNumber {
   }
   /**
    * 设置配置
+   * @param configs 配置参数
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.setConfigs({ divideConfigs: { precision: 0 } });
-   * @param configs 配置参数
-   * @returns 当前实例
    */
   setConfigs(configs: VNumberConfigs) {
     this.#divideConfigs = configs?.divideConfigs
@@ -72,11 +76,13 @@ class VNumber {
   }
   /**
    * 加法
+   *
+   * @param values 要相加的数
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.plus(1); // 2
-   * @param values 要相加的数
-   * @returns 当前实例
    */
   plus(...values: Array<Value | VNumber>) {
     const vList = getValues(values)
@@ -86,11 +92,13 @@ class VNumber {
   }
   /**
    * 减法
+   *
+   * @param values 要相减的数
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.minus(1); // 0
-   * @param values 要相减的数
-   * @returns 当前实例
    */
   minus(...values: Array<Value | VNumber>) {
     const vList = getValues(values)
@@ -100,12 +108,14 @@ class VNumber {
   }
   /**
    * 乘法
+   *
+   * @param values 要相乘的数
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.times(2, 2); // 4
    * vn.times(2, 2, 2); // 8
-   * @param values 要相乘的数
-   * @returns 当前实例
    */
   times(...values: Array<Value | VNumber>) {
     const vList = getValues(values)
@@ -115,6 +125,10 @@ class VNumber {
   }
   /**
    * 除法
+   *
+   * @param values 要相除的数
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(8);
    * vn.divide(2); // 4
@@ -122,8 +136,6 @@ class VNumber {
    * const vNumber = new VNumber(20);
    * vNumber.setConfigs({ divideConfigs: { precision: 0 } }).divide(3); // 7
    * vNumber.setConfigs({ divideConfigs: { precision: 2, rounded: false } }).divide(3); // 6.66
-   * @param values 要相除的数
-   * @returns 当前实例
    */
   divide(...values: Array<Value | VNumber>) {
     const vList = getValues(values)
@@ -133,11 +145,13 @@ class VNumber {
   }
   /**
    * 求余
+   *
+   * @param values 被求余数
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(5);
    * vn.mod(2); // 1
-   * @param values 被求余数
-   * @returns 当前实例
    */
   mod(value: Value | VNumber) {
     const [v] = getValues([value])
@@ -146,15 +160,17 @@ class VNumber {
   }
   /**
    * 保留小数位
+   *
+   * @param precision 保留位数
+   * @param rounded 是否四舍五入
+   * @returns 当前实例
+   *
    * @example
    * const vn = new VNumber(5.333);
    * vn.toFixed(5.33333333, 0); // 5
    * vn.toFixed(5.33333333, 2); // 5.33
    * vn.toFixed(5.66666666, 2); // 5.67
    * vn.toFixed(5.66666666, 2, false); // 5.66
-   * @param precision 保留位数
-   * @param rounded 是否四舍五入
-   * @returns 当前实例
    */
   toFixed(precision: number, rounded?: boolean) {
     this.#value = toFixed(this.#value, precision, rounded)
@@ -163,14 +179,16 @@ class VNumber {
   }
   /**
    * 比大小
+   *
+   * @param compareValue 比较值
+   * @param comparedValue 被比较值
+   * @returns >: 返回1 =: 返回0 <: 返回-1
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.compared(2); // -1
    * vn.compared(1); // 0
    * vn.compared(0); // 1
-   * @param compareValue 比较值
-   * @param comparedValue 被比较值
-   * @returns >: 返回1 =: 返回0 <: 返回-1
    */
   compared(value: Value | VNumber) {
     const [v] = getValues([value])
@@ -178,13 +196,15 @@ class VNumber {
   }
   /**
    * 是否大于
+   *
+   * @param values 被比较数
+   * @returns 大于返回true，否则返回false
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.isGreat(2); // false
    * vn.isGreat(1); // false
    * vn.isGreat(0); // true
-   * @param values 被比较数
-   * @returns 大于返回true，否则返回false
    */
   isGreat(value: Value | VNumber) {
     const [v] = getValues([value])
@@ -192,13 +212,15 @@ class VNumber {
   }
   /**
    * 是否小于
+   *
+   * @param values 被比较数
+   * @returns 小于返回true，否则返回false
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.isLess(2); // true
    * vn.isLess(1); // false
    * vn.isLess(0); // false
-   * @param values 被比较数
-   * @returns 小于返回true，否则返回false
    */
   isLess(value: Value | VNumber) {
     const [v] = getValues([value])
@@ -206,13 +228,15 @@ class VNumber {
   }
   /**
    * 是否等于
+   *
+   * @param values 被比较数
+   * @returns 等于返回true，否则返回false
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.isEqual(2); // false
    * vn.isEqual(1); // true
    * vn.isEqual(0); // false
-   * @param values 被比较数
-   * @returns 等于返回true，否则返回false
    */
   isEqual(value: Value | VNumber) {
     const [v] = getValues([value])
@@ -220,13 +244,15 @@ class VNumber {
   }
   /**
    * 是否大于等于
+   *
+   * @param values 被比较数
+   * @returns 等于返回true，否则返回false
+   *
    * @example
    * const vn = new VNumber(1);
    * vn.isGreat(2); // false
    * vn.isGreat(1); // true
    * vn.isGreat(0); // false
-   * @param values 被比较数
-   * @returns 等于返回true，否则返回false
    */
   isGreatEqual(value: Value | VNumber) {
     const [v] = getValues([value])

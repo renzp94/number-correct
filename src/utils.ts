@@ -1,12 +1,14 @@
 import { isGreatEqual, plus } from '.'
 import type { Operation } from './math'
+import { Value } from './object'
 
 /**
  * 将数字字符串转换成数字数组
+ *
  * @param v 数字字符串
  * @returns
  */
-export const transformNumberArray = (v: string | number) =>
+export const transformNumberArray = (v: Value) =>
   v?.toString()?.split('')?.map(Number) ?? []
 /**
  * 创建一个获取数组中元素最大长度值的reduce函数
@@ -21,6 +23,7 @@ export const createGetMaxLenReduce = (filed: 'integer' | 'decimal') => {
 }
 /**
  * 创建数字数组
+ *
  * @param length 数组长度
  * @returns
  */
@@ -28,6 +31,7 @@ export const createNumberArray = (length: number, value = 0) =>
   Array.from({ length }).fill(value) as number[]
 /**
  * 拼接整数数组和小数数组为一个数
+ *
  * @param integer 整数数组
  * @param decimal 小数数组
  * @returns 数值的字符串
@@ -45,6 +49,7 @@ export const joinNumber = (integer: number[], decimal: number[]) => {
 }
 /**
  * 将VData类型的数据整合
+ *
  * @param target 数据源
  * @param computed 计算函数
  * @returns 返回最终数据数组
@@ -66,6 +71,7 @@ export interface VNumber {
 
 /**
  * 创建竖式计算函数
+ *
  * @param operation 计算方式函数
  * @returns 返回计算结果的字符串
  */
@@ -97,11 +103,12 @@ export interface VData {
 
 /**
  * 获取竖式计算的数据
+ *
  * @param numbers 相加数值数组
  * @returns [整数数据，小数数据]
  */
 export const getVData = (
-  numbers: Array<string | number>,
+  numbers: Array<Value>,
   defaultDataFillValue = 0,
 ): [VData, VData] => {
   // 拆分整数和小数
@@ -161,6 +168,7 @@ export const getVData = (
 
 /**
  * 获取竖式计算的数据
+ *
  * @param numbers 相加数值数组
  * @returns [整数数据，小数数据]
  */
@@ -202,6 +210,7 @@ export const getThanZeroIndex = (target: number[], currIndex: number) => {
 
 /**
  * 获取竖式计算的数据
+ *
  * @param numbers 相加数值数组
  * @returns [整数数据，小数数据]
  */
@@ -218,6 +227,7 @@ export const getVNumberList = (numbers: Array<string | number>): VNumber[] => {
 
 /**
  * 移除数字字符串前面无效的0
+ *
  * @param number 数字字符串
  * @returns 返回移除后的数字字符串
  */
@@ -233,6 +243,7 @@ export const replaceBeforeInvalidZero = (numbers: number[]) => {
 
 /**
  * 移除数字字符串前后面无效的0
+ *
  * @param number 数字字符串
  * @returns 返回移除后的数字字符串
  */
@@ -251,6 +262,7 @@ export const replaceInvalidZero = (number: string) => {
 
 /**
  * 移除小数数字字符串为整数时后面无效的0
+ *
  * @param number 数字字符串
  * @returns 返回移除后的数字字符串
  */
@@ -265,24 +277,25 @@ export const replaceDecimalInvalidZero = (
 
 /**
  * 是否为负数
+ *
  * @param v 数字或数字字符串
  * @returns 是返回true，否则返回false
  */
-export const isNegativeNumber = (v: string | number) =>
-  v?.toString()?.includes('-')
+export const isNegativeNumber = (v: Value) => v?.toString()?.includes('-')
 /**
  * 移除首个负号
+ *
  * @param v 数字或数字字符串
  * @returns 返回移除后的字符串
  */
-export const removeMinusSign = (v: string | number) =>
-  v?.toString()?.replace('-', '')
+export const removeMinusSign = (v: Value) => v?.toString()?.replace('-', '')
 /**
  * 从数组中筛选出来正数和负数
+ *
  * @param numbers 数字数组
  * @returns [正数数组，负数数组]
  */
-export const getSymbolNumbers = (numbers: Array<string | number>) => {
+export const getSymbolNumbers = (numbers: Array<Value>) => {
   const negativeNumbers = numbers.filter(isNegativeNumber)
   const positiveNumbers = numbers.filter((v) => !negativeNumbers.includes(v))
 
@@ -290,10 +303,11 @@ export const getSymbolNumbers = (numbers: Array<string | number>) => {
 }
 /**
  * 负数相加
+ *
  * @param numbers 负数数组
  * @returns 返回相加后的值
  */
-export const plusNegativeNumber = (numbers: Array<string | number>) => {
+export const plusNegativeNumber = (numbers: Array<Value>) => {
   let negativeNumber = removeMinusSign(numbers?.[0])
   if (numbers.length > 1) {
     // 将负数转为正数，然后相加
@@ -304,10 +318,11 @@ export const plusNegativeNumber = (numbers: Array<string | number>) => {
 }
 /**
  * 获取除法需要的数据
+ *
  * @param number 数字字符串
  * @returns 返回[数字数组,小数个数]
  */
-export const getVDivideData = (number: string | number): [string[], number] => {
+export const getVDivideData = (number: Value): [string[], number] => {
   const value = replaceInvalidZero(removeMinusSign(number))
   const decimalPointIndex = value.indexOf('.')
   const decimalCount =
@@ -320,6 +335,7 @@ export const getVDivideData = (number: string | number): [string[], number] => {
 }
 /**
  * 计算进位后的值
+ *
  * @param number 数字字符串
  * @returns 如果是整数则原样返回，否则返回最终进位后的值
  */
@@ -360,21 +376,22 @@ export const getRoundedValue = (number: string, precision: number) => {
 
   return result
 }
-
 /**
  * 验证是否为数字
+ *
  * @param v 字符串
  * @returns 为数字则返回true，否则返回false
  */
-export const isNumber = (v: string | number) =>
+export const isNumber = (v: Value) =>
   /^[-]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?$/.test(v.toString())
 /**
  * 数字有效验证器
+ *
  * @param numbers 当前操作的数
  * @returns 验证不通过则报错
  */
-export const validator = (numbers: Array<string | number>) => {
-  let errorValue: string | number
+export const validator = (numbers: Array<Value>) => {
+  let errorValue: Value
 
   const isError = numbers.some((v) => {
     const pass = isNumber(v)
@@ -390,10 +407,11 @@ export const validator = (numbers: Array<string | number>) => {
 }
 /**
  * 将科学计数法转换为数字完成形式
+ *
  * @param v 科学计数法表示的数字
  * @returns 返回转换后的数字
  */
-export const transformScientificNotation = (v: string | number) => {
+export const transformScientificNotation = (v: Value) => {
   let value = v.toString()
   if (/[eE]/.test(value)) {
     let [base, exponent] = value.split(/[eE]/)
