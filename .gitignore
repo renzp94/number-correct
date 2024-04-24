@@ -106,6 +106,7 @@ web_modules/
 
 .cache
 .parcel-cache
+cache
 
 # Next.js build output
 
