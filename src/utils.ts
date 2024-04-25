@@ -261,21 +261,6 @@ export const replaceInvalidZero = (number: string) => {
 }
 
 /**
- * 移除小数数字字符串为整数时后面无效的0
- *
- * @param number 数字字符串
- * @returns 返回移除后的数字字符串
- */
-export const replaceDecimalInvalidZero = (
-  number: string,
-  decimalPoint: number,
-) => {
-  const decimalList = number.split('').reverse()
-  decimalList.splice(decimalPoint, 0, '.')
-  return decimalList.reverse().join('')
-}
-
-/**
  * 是否为负数
  *
  * @param v 数字或数字字符串
