@@ -9,10 +9,16 @@
 ```ts
 import { VNumber } from '@renzp/number-correct'
 
-const v = new VNumber(16);
-console.log(v.divide(2, 2, 2).value); // 2
-const a = new VNumber(20, { divideConfigs: { precision: 0 } });
-console.log(a.divide(3).value); // 7
+const v = new VNumber(1);
+
+v.plus(1)
+ .minus(2)
+ .plus(2)
+ .times(3)
+ .plus(2)
+ .divide(2);
+
+console.log(v.value); // 4
 ```
 
 ## 构造函数
