@@ -224,7 +224,7 @@ export const mod = (divisor: Value, dividend: Value) => {
     throw new Error('被求余数不能为0')
   }
   // 如果余数小于被求余数则直接返回余数
-  if (isLess(tDivisor, tDividend)) {
+  if (!isNegativeNumber(tDivisor) && isLess(tDivisor, tDividend)) {
     return tDivisor
   }
 
@@ -258,6 +258,10 @@ export const mod = (divisor: Value, dividend: Value) => {
     remainder = `${remainder}${
       remainder.includes('.') ? '' : '.'
     }${decimalRemainder}`
+  }
+
+  if (isNegativeNumber(tDivisor) && remainder !== '0') {
+    remainder = `-${remainder}`
   }
 
   return remainder
