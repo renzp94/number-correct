@@ -15,6 +15,19 @@
 
 基于竖式计算方式矫正js数字计算精度
 
+## coverage
+
+> 由于使用的`bun test`无法生成`coverage`HTML文件，所以在此列一下`coverage`
+
+| File            | % Funcs | % Lines |
+| --------------- | ------- | ------- |
+| All files       | 100.00  | 99.92   |
+| src/compared.ts | 100.00  | 100.00  |
+| src/index.ts    | 100.00  | 99.58   |
+| src/math.ts     | 100.00  | 100.00  |
+| src/object.ts   | 100.00  | 100.00  |
+| src/utils.ts    | 100.00  | 100.00  |
+
 ## 安装
 
 ```sh
