@@ -2,6 +2,19 @@
 
 `@renzp/number-correct`是一款零依赖、基于竖式计算方式矫正js数字计算精度的库，不管计算的数有多大都不会丢失精度。
 
+## coverage
+
+> 由于使用的`bun test`无法生成`coverage`HTML文件，所以在此列一下`coverage`
+
+| File            | % Funcs | % Lines |
+| --------------- | ------- | ------- |
+| All files       | 100.00  | 99.92   |
+| src/compared.ts | 100.00  | 100.00  |
+| src/index.ts    | 100.00  | 99.58   |
+| src/math.ts     | 100.00  | 100.00  |
+| src/object.ts   | 100.00  | 100.00  |
+| src/utils.ts    | 100.00  | 100.00  |
+
 ## 什么是竖式计算?
 
 竖式计算就是数学中的`列竖式`。如：`123 + 456 = 579`
