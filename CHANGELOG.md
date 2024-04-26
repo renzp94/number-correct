@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/renzp94/number-correct/compare/v0.0.16...v0.0.17) (2024-04-26)
+
+
+### Bug修复
+
+* **mod:** 修复求余计算错误的问题 ([2619ccb](https://github.com/renzp94/number-correct/commit/2619ccbe72d6f98ff734f3647a3fda9181b4d659))
+
 ### [0.0.16](https://github.com/renzp94/number-correct/compare/v0.0.15...v0.0.16) (2024-04-26)
 
 
