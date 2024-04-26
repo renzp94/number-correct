@@ -251,6 +251,10 @@ export const mod = (divisor: Value, dividend: Value) => {
       .slice(divisorValues.length - count)
       .join('')
     divisorValues = divisorValues.slice(0, divisorValues.length - count)
+  } else if (count < 0) {
+    divisorValues = divisorValues.concat(
+      Array.from({ length: Math.abs(count) }, () => '0'),
+    )
   }
 
   const dividendValue = dividendValues.join('')
