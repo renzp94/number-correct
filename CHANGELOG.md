@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/renzp94/number-correct/compare/v0.0.15...v0.0.16) (2024-04-26)
+
+
+### 其他
+
+* 移除无用函数 ([69ec060](https://github.com/renzp94/number-correct/commit/69ec06080ef09b618b5bbf3002ee1a25f7ae3ad6))
+
+
+### 测试
+
+* 调整测试例子使coverage达到100% ([6aa1a6f](https://github.com/renzp94/number-correct/commit/6aa1a6f80259171705e268c606f8169fe940c4fa))
+
+
+### 文档
+
+* 添加coverage展示 ([764015b](https://github.com/renzp94/number-correct/commit/764015beab6e5b0c6cd444c7e3b15e0af7786b07))
+
+
+### CI配置
+
+* 移除coveralls上传coverage文件脚本 ([955c88a](https://github.com/renzp94/number-correct/commit/955c88a0191a89e3b3936912600f514580969bc0))
+
+
+### Bug修复
+
+* **divide:** 修复负数除小数时计算错误的问题 ([498b568](https://github.com/renzp94/number-correct/commit/498b568cb41eee0ecbcd807dbd1291caeddae421))
+* **mod:** 修复求余函数负数求余小数计算错误的问题 ([4d61037](https://github.com/renzp94/number-correct/commit/4d610379bc2c58c99c7e67f08a03bd23e2b4a173))
+
 ### [0.0.15](https://github.com/renzp94/number-correct/compare/v0.0.14...v0.0.15) (2024-04-25)
 
 
