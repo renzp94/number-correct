@@ -175,7 +175,6 @@ const _divide = (divisor: string, dividend): [number, string] => {
       // 得出商和差值
       return [quotient, diffValue]
     }
-    const __debug_diffValue = diffValue
     // 否则进行减法计算
     diffValue = minus(diffValue, dividend)
     // 并记录+1
