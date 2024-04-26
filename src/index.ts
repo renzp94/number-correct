@@ -270,9 +270,18 @@ export const mod = (divisor: Value, dividend: Value) => {
   }
   // 拼接小数差位的值
   if (decimalRemainder) {
-    remainder = `${remainder}${
-      remainder.includes('.') ? '' : '.'
-    }${decimalRemainder}`
+    const decimalPoint = remainder.includes('.') ? '' : '.'
+    let padZero = ''
+    // 如果等于0则表示除尽，需要补足小数位
+    if (remainder === '0') {
+      // 计算需要补多少0
+      padZero = Array.from(
+        { length: divisorDecimalCount - decimalRemainder.length },
+        () => '0',
+      ).join('')
+    }
+
+    remainder = `${remainder}${decimalPoint}${padZero}${decimalRemainder}`
   }
 
   if (isNegativeNumber(tDivisor) && remainder !== '0') {
