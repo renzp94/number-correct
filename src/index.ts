@@ -66,6 +66,11 @@ export const divide = (
     throw new Error('被除数不能为0')
   }
 
+  // 是否为负数
+  const isNegative =
+    (isNegativeNumber(tDivisor) && !isNegativeNumber(dividend)) ||
+    (isNegativeNumber(dividend) && !isNegativeNumber(tDivisor))
+
   const [divisorValues, divisorDecimalCount] = getVDivideData(tDivisor)
   const [dividendValues, dividendDecimalCount] = getVDivideData(dividend)
   dividend = dividendValues.join('')
@@ -81,7 +86,9 @@ export const divide = (
     if (quotient.includes('.')) {
       const [integer, decimal] = quotient.split('.').map((v) => v.split(''))
       const v = decimal.shift()
-      quotient = `${integer.join('')}${v}.${decimal.join('')}`
+      const integerValue = integer.join('') !== '0' ? integer.join('') : ''
+      const decimalValue = decimal.length > 0 ? `.${decimal.join('')}` : ''
+      quotient = `${integerValue}${v}${decimalValue}`
     } else {
       quotient = quotient.padEnd(zeroCount + quotient.length, '0')
     }
@@ -104,6 +111,10 @@ export const divide = (
 
   if (rounded) {
     quotient = getRoundedValue(quotient, precision)
+  }
+
+  if (isNegative && quotient !== '0') {
+    quotient = `-${quotient}`
   }
 
   return quotient
