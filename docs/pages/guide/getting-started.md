@@ -20,6 +20,19 @@ $ yarn add @renzp/number-correct
 $ bun add @renzp/number-correct
 ```
 
+```js [cdn]
+<script type="importmap">
+    {
+        "imports": {
+            "@renzp/utils": "https://esm.sh/@renzp/number-correct"
+        }
+    }
+</script>
+<script type="module">
+  import { plus } from '@renzp/number-correct'
+</script>
+```
+
 :::
 
 
