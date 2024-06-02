@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/renzp94/number-correct/compare/v0.0.17...v0.0.18) (2024-06-02)
+
+
+### CI配置
+
+* 调整文档部署action触发时机 ([b0748ff](https://github.com/renzp94/number-correct/commit/b0748fff7a3a443e07ec696c42d81490b8d142c8))
+
+
+### 文档
+
+* 添加404页面中文配置 ([54dfa55](https://github.com/renzp94/number-correct/commit/54dfa55cd198b33ac6d8dc45de54150df15b9ed0))
+* **getting-started:** 添加cdn引入包说明 ([1e0512e](https://github.com/renzp94/number-correct/commit/1e0512e3054f6fa7c2e3091d80a92a8bc7e7f051))
+
+
+### 其他
+
+* 调整bun type ([ff7c564](https://github.com/renzp94/number-correct/commit/ff7c5648488dd72ad4f4c9466b9d41f90a12f6fc))
+* 添加coverage徽章 ([37f398a](https://github.com/renzp94/number-correct/commit/37f398a3e07b4a5e6d46400db951b627b91a4ab5))
+* 移除无用代码 ([824d474](https://github.com/renzp94/number-correct/commit/824d4746d26cf6a2ff15ba9cfaf661d03808b5fc))
+
+
+### Bug修复
+
+* 修复getRoundedValue方法计算错误的问题 ([ae89dc3](https://github.com/renzp94/number-correct/commit/ae89dc3cc3675a975ee2b89d47cdb44332e46511))
+
 ### [0.0.17](https://github.com/renzp94/number-correct/compare/v0.0.16...v0.0.17) (2024-04-26)
 
 

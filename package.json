@@ -1,6 +1,6 @@
 {
   "name": "@renzp/number-correct",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "基于竖式计算方式矫正js数字计算精度",
   "author": "renzp <1074720760.qq.com>",
   "repository": {
@@ -20,7 +20,10 @@
     "url": "https://github.com/renzp94/number-correct/issues"
   },
   "main": "./dist/index.js",
-  "files": ["dist", "./coverage.svg"],
+  "files": [
+    "dist",
+    "./coverage.svg"
+  ],
   "types": "./dist/index.d.ts",
   "homepage": "https://github.com/renzp94/number-correct#readme",
   "keywords": [
