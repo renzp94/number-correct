@@ -20,9 +20,7 @@
     "url": "https://github.com/renzp94/number-correct/issues"
   },
   "main": "./dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist", "./coverage.svg"],
   "types": "./dist/index.d.ts",
   "homepage": "https://github.com/renzp94/number-correct#readme",
   "keywords": [
@@ -38,7 +36,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "pub": "npm run build && standard-version && npm publish",
+    "pub": "npm run build && npm run coverage && standard-version && npm publish",
+    "coverage": "bun run scripts/coverage.ts",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"

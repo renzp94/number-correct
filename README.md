@@ -1,32 +1,25 @@
 <p align="center"><a href="https://github.com/renzp94/number-correct" target="_blank" rel="noopener noreferrer"><img width="200" src="./logo.png" alt="number-correct logo"></a></p>
 <p align="center">
-  <!-- <a href="https://codecov.io/github/@renzp/number-correct"><img src="https://img.shields.io/codecov/c/github/@renzp/number-correct.svg?sanitize=true" alt="Coverage Status"></a> -->
-    <a href="https://bundlephobia.com/package/@renzp/number-correct">
+  <a href="https://github.com/renzp94/number-correct/blob/main/coverage.md">
+    <img src="./coverage.svg" alt="Code coverage">
+  </a>
+  <a href="https://bundlephobia.com/package/@renzp/number-correct">
     <img src="https://img.shields.io/bundlephobia/minzip/@renzp/number-correct?label=minzipped" alt="Bundle Size">
   </a>
-  <a href="https://npmcharts.com/compare/@renzp/number-correct?minimal=true"><img src="https://img.shields.io/npm/dm/@renzp/number-correct.svg?sanitize=true" alt="Downloads"></a>
-  <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/v/@renzp/number-correct.svg?sanitize=true" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/@renzp/number-correct"><img src="https://img.shields.io/npm/l/@renzp/number-correct.svg?sanitize=true" alt="License"></a>
-  <a href="https://www.jsdocs.io/package/@renzp/number-correct"><img src="https://img.shields.io/badge/JSDoc-blue" alt="docs"></a>
-    <a href="https://github.com/renzp94/number-correct/blob/main/CHANGELOG.md"><img src="https://img.shields.io/badge/更新日志-gray" alt="Change Log"></a>
+  <a href="https://npmcharts.com/compare/@renzp/number-correct?minimal=true">
+    <img src="https://img.shields.io/npm/dm/@renzp/number-correct.svg?sanitize=true" alt="Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/@renzp/number-correct">
+    <img src="https://img.shields.io/npm/v/@renzp/number-correct.svg?sanitize=true" alt="Version">
+  </a>
+  <a href="https://www.npmjs.com/package/@renzp/number-correct">
+    <img src="https://img.shields.io/npm/l/@renzp/number-correct.svg?sanitize=true" alt="License">
+  </a>
 </p>
 
 # number-correct
 
 基于竖式计算方式矫正js数字计算精度
-
-## coverage
-
-> 由于使用的`bun test`无法生成`coverage`HTML文件，所以在此列一下`coverage`
-
-| File            | % Funcs | % Lines |
-| --------------- | ------- | ------- |
-| All files       | 100.00  | 99.92   |
-| src/compared.ts | 100.00  | 100.00  |
-| src/index.ts    | 100.00  | 99.58   |
-| src/math.ts     | 100.00  | 100.00  |
-| src/object.ts   | 100.00  | 100.00  |
-| src/utils.ts    | 100.00  | 100.00  |
 
 ## 安装
 

@@ -1,19 +1,25 @@
-# 什么是@renzp/number-correct?
+<p align="center">
+  <a href="https://github.com/renzp94/number-correct" target="_blank" rel="noopener noreferrer"><img width="200" src="/logo.png" alt="@renzp/number-correct logo" style="border-radius: 50%;display: inline-block"></a>
+</p>
+<p align="center">
+  <a href="https://github.com/renzp94/number-correct/blob/main/coverage.md" target="_blank" style="display: inline-block">
+    <img src="/coverage.svg" alt="Code coverage">
+  </a>
+  <a href="https://bundlephobia.com/package/@renzp/number-correct" target="_blank" style="display: inline-block;margin-left: 4px;">
+    <img src="https://img.shields.io/bundlephobia/minzip/@renzp/number-correct?label=minzipped" alt="Bundle Size">
+  </a>
+  <a href="https://npmcharts.com/compare/@renzp/number-correct?minimal=true" target="_blank" style="display: inline-block;margin-left: 4px;">
+    <img src="https://img.shields.io/npm/dm/@renzp/number-correct.svg?sanitize=true" target="_blank" alt="Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/@renzp/number-correct" target="_blank" style="display: inline-block;margin-left: 4px;">
+    <img src="https://img.shields.io/npm/v/@renzp/number-correct.svg?sanitize=true" alt="Version">
+  </a>
+  <a href="https://www.npmjs.com/package/@renzp/number-correct" target="_blank" style="display: inline-block;margin-left: 4px;">
+    <img src="https://img.shields.io/npm/l/@renzp/number-correct.svg?sanitize=true" target="_blank" alt="License">
+  </a>
+</p>
 
 `@renzp/number-correct`是一款零依赖、基于竖式计算方式矫正js数字计算精度的库，不管计算的数有多大都不会丢失精度。
-
-## coverage
-
-> 由于使用的`bun test`无法生成`coverage`HTML文件，所以在此列一下`coverage`
-
-| File            | % Funcs | % Lines |
-| --------------- | ------- | ------- |
-| All files       | 100.00  | 99.92   |
-| src/compared.ts | 100.00  | 100.00  |
-| src/index.ts    | 100.00  | 99.58   |
-| src/math.ts     | 100.00  | 100.00  |
-| src/object.ts   | 100.00  | 100.00  |
-| src/utils.ts    | 100.00  | 100.00  |
 
 ## 什么是竖式计算?
 

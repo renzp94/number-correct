@@ -24,7 +24,7 @@ $ bun add @renzp/number-correct
 <script type="importmap">
     {
         "imports": {
-            "@renzp/utils": "https://esm.sh/@renzp/number-correct"
+            "@renzp/number-correct": "https://esm.sh/@renzp/number-correct"
         }
     }
 </script>
