@@ -426,16 +426,12 @@ export const toFixed = (number: Value, precision: number, rounded = true) => {
     return Number(value) === 0 ? value : `${symbol}${value}`
   }
 
-  if (rounded) {
-    value = getRoundedValue(value, precision)
-  }
-
   let [integer, decimal = ''] = value.split('.')
-  if (decimal.length < precision) {
-    decimal = decimal.padEnd(precision, '0')
-  } else {
-    decimal = decimal.slice(0, precision)
-  }
+  decimal =
+    decimal.length < precision
+      ? decimal.padEnd(precision, '0')
+      : decimal.slice(0, precision)
+
   value = `${symbol}${integer}.${decimal}`
 
   return value

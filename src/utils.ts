@@ -355,7 +355,7 @@ export const getRoundedValue = (number: string, precision: number) => {
   result = `${integer}.${decimal}`
 
   if (isGreatEqual(roundValue, 5)) {
-    const zeroList = createNumberArray(decimal.length - 1)
+    const zeroList = createNumberArray(precision - 1)
     result = plus(result, `0.${zeroList.join('')}1`)
   }
 

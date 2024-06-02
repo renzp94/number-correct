@@ -29,7 +29,7 @@ test('toFixed(1.123456, 0) = 1', () => {
   expect(toFixed(1.123456, 0)).toBe('1')
 })
 
-test('toFixed(1.789, 0) = 1', () => {
+test('toFixed(1.789, 0) = 2', () => {
   expect(toFixed(1.789, 0)).toBe('2')
 })
 
@@ -45,6 +45,10 @@ test('toFixed(-0.789, 0) = -1', () => {
   expect(toFixed(-0.789, 0)).toBe('-1')
 })
 
-test('toFixed(5.333333, 2) = 5.33', () => {
-  expect(toFixed(5.333333, 2)).toBe('5.33')
+test('toFixed(5.666666, 2) = 5.67', () => {
+  expect(toFixed(5.666666, 2)).toBe('5.67')
+})
+
+test('toFixed(5.666666, 2, false) = 5.66', () => {
+  expect(toFixed(5.666666, 2, false)).toBe('5.66')
 })
