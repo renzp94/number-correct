@@ -80,6 +80,7 @@ const coverage = async (options?: CoverageOptions): Promise<boolean> => {
 
     md += lines.slice(lineIndex, endIndex).join('\n')
     await Bun.write(path.resolve(outDir, `${label}.md`), md)
+    await Bun.$`git add ${label}.md ${label}.svg ./docs/public/${label}.svg  && git commit -m "coverage: update coverage"`
     return true
   } catch {
     return false

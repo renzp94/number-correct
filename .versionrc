@@ -53,7 +53,12 @@
     {
       "type": "ci",
       "section": "CI配置",
-      "hidden": false
+      "hidden": true
+    },
+    {
+      "type": "coverage",
+      "section": "coverage",
+      "hidden": true
     }
   ]
 }
