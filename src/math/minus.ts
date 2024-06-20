@@ -122,7 +122,8 @@ export const minus = (reduction: Value, ...numbers: Array<Value>) => {
     // 减数转为正数
     reductionValue = removeMinusSign(reductionValue)
     // 相加后结果转为负数
-    reductionValue = `-${plus(reductionValue, minuend)}`
+    reductionValue = plus(reductionValue, minuend)
+    reductionValue = `${reductionValue === '0' ? '' : '-'}${reductionValue}`
     return reductionValue
   }
 
@@ -171,10 +172,6 @@ export const minus = (reduction: Value, ...numbers: Array<Value>) => {
   let result = joinNumber(integer, decimal)
   // 处理整数最高位不够向高位借位时记录的1和最高位计算结果-被转为NaN的情况
   result = result.replace('1NaN', '-')
-  let borrowNumber = result.match(/NaN\d{1}/)?.[0]
-  if (borrowNumber) {
-    borrowNumber = borrowNumber.replace('NaN', '')
-  }
 
   return isNumberGreatEqual ? result : `-${result}`
 }
