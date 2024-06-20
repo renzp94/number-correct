@@ -1,18 +1,13 @@
 import {
-  type DivideConfigs,
   compared,
-  divide,
   isEqual,
   isGreat,
   isGreatEqual,
   isLess,
   isLessEqual,
-  minus,
-  mod,
-  plus,
-  times,
-  toFixed,
-} from '.'
+} from './compared'
+import { divide, minus, mod, plus, times, toFixed } from './math'
+import { DivideConfigs } from './math/divide'
 
 export type Value = string | number
 

@@ -1,4 +1,4 @@
-import { Value } from './object'
+import { Value } from '../object'
 import {
   getVNumberList,
   isNegativeNumber,
@@ -6,7 +6,7 @@ import {
   replaceInvalidZero,
   transformScientificNotation,
   validator,
-} from './utils'
+} from '../utils'
 
 type ComparedReturnValue = -1 | 0 | 1
 
@@ -94,73 +94,9 @@ export const compared = (
 
   return status
 }
-/**
- * 是否等于
- *
- * @param compareValue 比较值
- * @param comparedValue 被比较值
- * @returns 等于返回true，否则返回false
- *
- * @example
- * isEqual(1, 2); // false
- * isEqual(1, 1); // true
- * isEqual(1, 0); // false
- */
-export const isEqual = (compareValue: Value, comparedValue: Value) =>
-  compared(compareValue, comparedValue) === 0
-/**
- * 是否大于
- *
- * @param compareValue 比较值
- * @param comparedValue 被比较值
- * @returns 大于返回true，否则返回false
- *
- * @example
- * isGreat(1, 2); // false
- * isGreat(1, 1); // false
- * isGreat(1, 0); // true
- */
-export const isGreat = (compareValue: Value, comparedValue: Value) =>
-  compared(compareValue, comparedValue) === 1
-/**
- * 是否大于等于
- *
- * @param compareValue 比较值
- * @param comparedValue 被比较值
- * @returns 大于等于返回true，否则返回false
- *
- * @example
- * isGreatEqual(1, 2); // false
- * isGreatEqual(1, 1); // true
- * isGreatEqual(1, 0); // true
- */
-export const isGreatEqual = (compareValue: Value, comparedValue: Value) =>
-  isGreat(compareValue, comparedValue) || isEqual(compareValue, comparedValue)
-/**
- * 是否小于
- *
- * @param compareValue 比较值
- * @param comparedValue 被比较值
- * @returns 小于返回true，否则返回false
- *
- * @example
- * isLess(1, 2); // true
- * isLess(1, 1); // false
- * isLess(1, 0); // false
- */
-export const isLess = (compareValue: Value, comparedValue: Value) =>
-  compared(compareValue, comparedValue) === -1
-/**
- * 是否小于等于
- *
- * @param compareValue 比较值
- * @param comparedValue 被比较值
- * @returns 小于等于返回true，否则返回false
- *
- * @example
- * isLessEqual(1, 2); // true
- * isLessEqual(1, 1); // true
- * isLessEqual(1, 0); // false
- */
-export const isLessEqual = (compareValue: Value, comparedValue: Value) =>
-  isLess(compareValue, comparedValue) || isEqual(compareValue, comparedValue)
+
+export { isEqual } from './isEqual'
+export { isGreat } from './isGreat'
+export { isGreatEqual } from './isGreatEqual'
+export { isLess } from './isLess'
+export { isLessEqual } from './isLessEqual'
