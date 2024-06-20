@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/renzp94/number-correct/compare/v0.0.17...v0.0.19) (2024-06-20)
+
+
+### CI配置
+
+* 调整文档部署action触发时机 ([b0748ff](https://github.com/renzp94/number-correct/commit/b0748fff7a3a443e07ec696c42d81490b8d142c8))
+
+
+### 其他
+
+* 调整bun type ([ff7c564](https://github.com/renzp94/number-correct/commit/ff7c5648488dd72ad4f4c9466b9d41f90a12f6fc))
+* 添加coverage徽章 ([37f398a](https://github.com/renzp94/number-correct/commit/37f398a3e07b4a5e6d46400db951b627b91a4ab5))
+* 移除无用代码 ([824d474](https://github.com/renzp94/number-correct/commit/824d4746d26cf6a2ff15ba9cfaf661d03808b5fc))
+* **release:** 0.0.18 ([c1f8b55](https://github.com/renzp94/number-correct/commit/c1f8b559a0a1bd410adf2b0e6500597745a930f7))
+
+
+### 文档
+
+* 调整移动端网站中文适配 ([c1757c8](https://github.com/renzp94/number-correct/commit/c1757c8d4e5c4a8e7fcb28314d80c442720f8faf))
+* 添加404页面中文配置 ([54dfa55](https://github.com/renzp94/number-correct/commit/54dfa55cd198b33ac6d8dc45de54150df15b9ed0))
+* **getting-started:** 添加cdn引入包说明 ([1e0512e](https://github.com/renzp94/number-correct/commit/1e0512e3054f6fa7c2e3091d80a92a8bc7e7f051))
+
+
+### 代码重构
+
+* 拆分代码到每个文件中便于后续维护 ([0320798](https://github.com/renzp94/number-correct/commit/0320798726b4f2a693438f935c2016fff9560932))
+
+
+### Bug修复
+
+* 修复getRoundedValue方法计算错误的问题 ([2854e37](https://github.com/renzp94/number-correct/commit/2854e37e11a82fb9f7f828c9e950790ed6c4bdbb))
+* **minus:** 修复结果为0时有负号的问题 ([d8a5669](https://github.com/renzp94/number-correct/commit/d8a5669f3426fb5631a92d813f46719ee6122325))
+
 ### [0.0.18](https://github.com/renzp94/number-correct/compare/v0.0.17...v0.0.18) (2024-06-02)
 
 
