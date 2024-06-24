@@ -1,7 +1,7 @@
 <p align="center"><a href="https://github.com/renzp94/number-correct" target="_blank" rel="noopener noreferrer"><img width="200" src="./logo.png" alt="number-correct logo"></a></p>
 <p align="center">
-  <a href="https://github.com/renzp94/number-correct/blob/main/coverage.md">
-    <img src="./coverage.svg" alt="Code coverage">
+  <a href="https://codecov.io/gh/renzp94/number-correct" > 
+    <img src="https://codecov.io/gh/renzp94/number-correct/graph/badge.svg?token=D4YSUXYI10"/> 
   </a>
   <a href="https://bundlephobia.com/package/@renzp/number-correct">
     <img src="https://img.shields.io/bundlephobia/minzip/@renzp/number-correct?label=minzipped" alt="Bundle Size">
