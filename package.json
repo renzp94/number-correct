@@ -20,10 +20,7 @@
     "url": "https://github.com/renzp94/number-correct/issues"
   },
   "main": "./dist/index.js",
-  "files": [
-    "dist",
-    "./coverage.svg"
-  ],
+  "files": ["dist"],
   "types": "./dist/index.d.ts",
   "homepage": "https://github.com/renzp94/number-correct#readme",
   "keywords": [
